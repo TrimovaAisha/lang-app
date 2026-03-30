@@ -312,3 +312,48 @@ html, body, #root {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.folder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 5px 0;
+}
+
+.folder-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.folder-actions {
+  position: relative;
+  cursor: pointer;
+}
+
+.folder-actions i {
+  padding: 5px;
+}
+
+/* dropdown меню */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: #2a1f6f;
+  border-radius: 10px;
+  padding: 5px 0;
+  width: 100px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+.dropdown p {
+  padding: 8px 10px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.dropdown p:hover {
+  background: #3b2f7a;
+}

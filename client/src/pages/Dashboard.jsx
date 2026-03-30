@@ -8,15 +8,16 @@ function Dashboard() {
   const [showModal, setShowModal] = useState(false)
   const [folderName, setFolderName] = useState('')
   const [folders, setFolders] = useState(['папка'])
+  const [activeMenu, setActiveMenu] = useState(null) // для трёхточек
 
   // закрытие по ESC
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') {
         setShowModal(false)
+        setActiveMenu(null)
       }
     }
-
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
   }, [])
@@ -29,6 +30,20 @@ function Dashboard() {
     setFolderName('')
     setShowModal(false)
   }
+
+  // удаление папки
+  const deleteFolder = (index) => {
+    const updated = folders.filter((_, i) => i !== index)
+    setFolders(updated)
+    setActiveMenu(null)
+  }
+
+  // клик вне меню закрывает dropdown
+  useEffect(() => {
+    const handleClickOutside = () => setActiveMenu(null)
+    window.addEventListener('click', handleClickOutside)
+    return () => window.removeEventListener('click', handleClickOutside)
+  }, [])
 
   return (
     <div className="dashboard">
@@ -48,9 +63,30 @@ function Dashboard() {
           <p className="title">Ваши папки</p>
 
           {folders.map((f, index) => (
-            <p key={index}>
-              <i className="fa-solid fa-folder"></i> {f}
-            </p>
+            <div
+              className="folder-item"
+              key={index}
+              onClick={(e) => e.stopPropagation()} // чтобы клик не закрывал dropdown
+            >
+              <div className="folder-left">
+                <i className="fa-solid fa-folder"></i> {f}
+              </div>
+
+              <div className="folder-actions">
+                <i
+                  className="fa-solid fa-ellipsis"
+                  onClick={() =>
+                    setActiveMenu(activeMenu === index ? null : index)
+                  }
+                ></i>
+
+                {activeMenu === index && (
+                  <div className="dropdown">
+                    <p onClick={() => deleteFolder(index)}>Удалить</p>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
 
           <p onClick={() => setShowModal(true)} className="add-folder">
@@ -69,7 +105,6 @@ function Dashboard() {
       <div className="main">
         <div className="topbar">
           <input placeholder="Поиск..." />
-
           <button className="logout" onClick={() => navigate('/')}>
             Выйти
           </button>
@@ -93,23 +128,15 @@ function Dashboard() {
           className="modal-overlay"
           onClick={() => setShowModal(false)}
         >
-          <div
-            className="modal"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <i className="fa-solid fa-folder modal-icon"></i>
-
             <input
               type="text"
               placeholder="Укажите название папки"
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
             />
-
-            <button
-              disabled={!folderName.trim()}
-              onClick={addFolder}
-            >
+            <button disabled={!folderName.trim()} onClick={addFolder}>
               Создать
             </button>
           </div>
