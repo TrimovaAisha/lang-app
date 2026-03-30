@@ -33,7 +33,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h3 className="logo">\</h3>
+        <h3 className="logo">  </h3>
 
         <div className="menu">
           <p>
