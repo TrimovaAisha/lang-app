@@ -9,7 +9,11 @@ const authRoutes = require("./routes/Auth");
 const eventRoutes = require("./routes/events");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://lang-app-two.vercel.app'
+  ]
+}));
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
