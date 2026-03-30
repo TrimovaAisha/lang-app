@@ -8,6 +8,7 @@ html, body, #root {
   height: 100%;
 }
 
+/* AUTH */
 .auth-container {
   height: 100vh;
   display: flex;
@@ -54,6 +55,7 @@ html, body, #root {
   cursor: pointer;
 }
 
+/* DASHBOARD */
 .dashboard {
   display: flex;
   height: 100vh;
@@ -61,6 +63,7 @@ html, body, #root {
   color: white;
 }
 
+/* SIDEBAR */
 .sidebar {
   width: 220px;
   padding: 20px;
@@ -71,30 +74,45 @@ html, body, #root {
   margin-bottom: 30px;
 }
 
+/* MENU */
 .menu p,
 .folders p,
 .cards p {
-  margin: 10px 0;
+  margin: 12px 0;
   cursor: pointer;
   transition: 0.2s;
 }
 
+.menu,
+.folders,
+.cards {
+  margin-bottom: 25px;
+}
+
+/* TITLE */
+.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* HOVER */
 .menu p:hover,
 .folders p:hover,
 .cards p:hover {
   opacity: 0.7;
 }
 
-.title {
-  margin-top: 20px;
-  opacity: 0.6;
-}
-
+/* MAIN */
 .main {
   flex: 1;
   padding: 20px;
 }
 
+/* TOPBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -109,6 +127,7 @@ html, body, #root {
   outline: none;
 }
 
+/* LOGOUT */
 .logout {
   background: #3b2cff;
   color: white;
@@ -123,6 +142,7 @@ html, body, #root {
   background: #5a4bff;
 }
 
+/* HERO */
 .hero {
   margin-top: 20px;
   height: 120px;
@@ -133,6 +153,7 @@ html, body, #root {
   justify-content: center;
 }
 
+/* BUTTON */
 .continue-btn {
   background: #1c1a5e;
   color: white;
@@ -147,26 +168,34 @@ html, body, #root {
   background: #2e2bbf;
 }
 
+/* GRID */
 .card-grid {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 20px; /* 👈 увеличил расстояние между карточками */
 }
 
+/* КАРТОЧКА */
 .card {
   background: #2a1f6f;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 20px; /* 👈 больше внутренний отступ */
+  border-radius: 12px;
   transition: 0.2s;
   cursor: pointer;
+
+  min-height: 80px; /* 👈 чтобы карточки были ровнее */
+  display: flex;
+  align-items: center; /* центр текста по вертикали */
 }
 
+/* hover */
 .card:hover {
   transform: translateY(-5px);
   background: #3b2cff;
 }
 
+/* USER ICON */
 .user-icon {
   width: 60px;
   height: 60px;
