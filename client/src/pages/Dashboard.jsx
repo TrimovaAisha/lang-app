@@ -6,9 +6,10 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      {/* SIDEBAR */}
       <div className="sidebar">
-        <h3 className="logo">🏠</h3>
+        <h3 className="logo">
+          <i className="fa-solid fa-house"></i>
+        </h3>
 
         <div className="menu">
           <p>Главная</p>
@@ -17,19 +18,23 @@ function Dashboard() {
 
         <div className="folders">
           <p className="title">Ваши папки</p>
-          <p>📁 папка</p>
-          <p>➕ новая папка</p>
+          <p>
+            <i className="fa-solid fa-folder"></i> папка
+          </p>
+          <p>
+            <i className="fa-solid fa-plus"></i> новая папка
+          </p>
         </div>
 
         <div className="cards">
           <p className="title">Карточки</p>
-          <p>🗂 Карточки</p>
+          <p>
+            <i className="fa-solid fa-clone"></i> Карточки
+          </p>
         </div>
       </div>
 
-      {/* MAIN */}
       <div className="main">
-        {/* TOP BAR */}
         <div className="topbar">
           <input placeholder="Поиск..." />
 
@@ -41,12 +46,10 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* HERO BLOCK */}
         <div className="hero">
           <button className="continue-btn">Продолжить</button>
         </div>
 
-        {/* CARDS */}
         <div className="card-grid">
           <div className="card">название карточки</div>
           <div className="card">название карточки</div>

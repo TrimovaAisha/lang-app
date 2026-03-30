@@ -10,7 +10,9 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <div className="auth-icon">👤</div>
+        <div className="auth-icon">
+          <i className="fa-solid fa-user"></i>
+        </div>
 
         <input
           className="auth-input"
