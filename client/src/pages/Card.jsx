@@ -1,4 +1,4 @@
-import '../Auth.css'
+import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import CardItem from '../components/CardItem'
