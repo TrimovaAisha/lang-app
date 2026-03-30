@@ -10,7 +10,7 @@ function Register() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <div className="auth-icon">
+        <div className="auth-icon user-icon">
           <i className="fa-solid fa-user"></i>
         </div>
 
