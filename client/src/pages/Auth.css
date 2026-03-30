@@ -1,3 +1,4 @@
+/* сброс */
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +7,7 @@
 
 html, body, #root {
   height: 100%;
+  font-family: 'Arial', sans-serif;
 }
 
 /* AUTH */
@@ -68,10 +70,9 @@ html, body, #root {
   width: 220px;
   padding: 20px;
   border-right: 1px solid rgba(255,255,255,0.1);
-
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 👈 общий отступ между блоками */
+  gap: 15px;
 }
 
 /* БЛОКИ */
@@ -80,7 +81,7 @@ html, body, #root {
 .cards {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* 👈 отступ между пунктами */
+  gap: 10px;
 }
 
 /* ЭЛЕМЕНТЫ МЕНЮ */
@@ -88,29 +89,27 @@ html, body, #root {
 .folders p,
 .cards p {
   margin: 0;
-  padding: 10px;
-  border-radius: 8px;
-
+  padding: 12px 10px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
-
+  gap: 12px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-/* hover эффект */
 .menu p:hover,
 .folders p:hover,
 .cards p:hover {
   background: rgba(255,255,255,0.1);
 }
 
-/* иконки */
+/* иконки меню */
 .menu i,
 .folders i,
 .cards i {
-  width: 18px;
+  width: 20px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -118,7 +117,7 @@ html, body, #root {
 .title {
   margin: 10px 0 5px;
   opacity: 0.6;
-  font-size: 13px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -170,7 +169,6 @@ html, body, #root {
   justify-content: center;
 }
 
-/* BUTTON */
 .continue-btn {
   background: #1c1a5e;
   color: white;
@@ -193,78 +191,124 @@ html, body, #root {
   gap: 20px;
 }
 
-/* КАРТОЧКА */
 .card {
   background: #2a1f6f;
   padding: 20px;
   border-radius: 12px;
   transition: 0.2s;
   cursor: pointer;
-
   min-height: 80px;
   display: flex;
   align-items: center;
 }
 
-/* hover */
 .card:hover {
   transform: translateY(-5px);
   background: #3b2cff;
 }
 
-/* USER ICON */
-.user-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 20px;
-  position: relative;
-}
-
-.user-icon::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-}
-
-.user-icon::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 30px;
-  border-radius: 20px 20px 0 0;
-}
 /* кнопка добавить */
 .add-folder {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 10px;
 }
 
 .add-folder:hover {
-  opacity: 0.7;
+  background: rgba(255,255,255,0.05);
 }
 
-/* overlay */
+/* FOLDER ITEMS */
+.folder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.folder-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.folder-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.folder-left i {
+  font-size: 22px;
+}
+
+.folder-left .folder-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* только для пользовательских папок */
+.folder-actions {
+  position: relative;
+}
+
+.ellipsis-icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: #cfcfcf;
+  padding: 5px;
+}
+
+.ellipsis-icon:hover {
+  color: #ffffff;
+}
+
+/* dropdown меню */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: #3b2f7a;
+  border-radius: 10px;
+  padding: 5px 0;
+  width: 120px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.dropdown p {
+  padding: 8px 12px;
+  cursor: pointer;
+  margin: 0;
+  font-size: 15px;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.dropdown p:hover {
+  background: #4b3990;
+  border-radius: 5px;
+}
+
+/* MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 30, 0.7);
+  background: rgba(0,0,30,0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* окно */
 .modal {
   background: #1a115c;
   padding: 30px;
@@ -274,14 +318,12 @@ html, body, #root {
   box-shadow: 0 0 25px rgba(0,0,0,0.6);
 }
 
-/* иконка */
 .modal-icon {
   font-size: 40px;
   color: white;
   margin-bottom: 15px;
 }
 
-/* input */
 .modal input {
   width: 100%;
   padding: 10px;
@@ -293,7 +335,6 @@ html, body, #root {
   color: white;
 }
 
-/* кнопка */
 .modal button {
   padding: 10px 20px;
   border-radius: 10px;
@@ -311,49 +352,4 @@ html, body, #root {
 .modal button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-.folder-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  padding: 5px 0;
-}
-
-.folder-left {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.folder-actions {
-  position: relative;
-  cursor: pointer;
-}
-
-.folder-actions i {
-  padding: 5px;
-}
-
-/* dropdown меню */
-.dropdown {
-  position: absolute;
-  right: 0;
-  top: 25px;
-  background: #2a1f6f;
-  border-radius: 10px;
-  padding: 5px 0;
-  width: 100px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  z-index: 100;
-}
-
-.dropdown p {
-  padding: 8px 10px;
-  cursor: pointer;
-  margin: 0;
-}
-
-.dropdown p:hover {
-  background: #3b2f7a;
 }

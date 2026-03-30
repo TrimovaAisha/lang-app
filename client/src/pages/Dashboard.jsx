@@ -25,7 +25,6 @@ function Dashboard() {
   // добавление папки
   const addFolder = () => {
     if (!folderName.trim()) return
-
     setFolders([...folders, folderName])
     setFolderName('')
     setShowModal(false)
@@ -66,26 +65,30 @@ function Dashboard() {
             <div
               className="folder-item"
               key={index}
-              onClick={(e) => e.stopPropagation()} // чтобы клик не закрывал dropdown
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="folder-left">
-                <i className="fa-solid fa-folder"></i> {f}
+                <i className="fa-solid fa-folder folder-icon"></i>
+                <span className="folder-name">{f}</span>
               </div>
 
-              <div className="folder-actions">
-                <i
-                  className="fa-solid fa-ellipsis"
-                  onClick={() =>
-                    setActiveMenu(activeMenu === index ? null : index)
-                  }
-                ></i>
+              {/* меню только для пользовательских папок */}
+              {f !== 'папка' && (
+                <div className="folder-actions">
+                  <i
+                    className="fa-solid fa-ellipsis ellipsis-icon"
+                    onClick={() =>
+                      setActiveMenu(activeMenu === index ? null : index)
+                    }
+                  ></i>
 
-                {activeMenu === index && (
-                  <div className="dropdown">
-                    <p onClick={() => deleteFolder(index)}>Удалить</p>
-                  </div>
-                )}
-              </div>
+                  {activeMenu === index && (
+                    <div className="dropdown">
+                      <p onClick={() => deleteFolder(index)}>Удалить</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
 
