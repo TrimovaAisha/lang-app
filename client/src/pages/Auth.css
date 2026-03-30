@@ -1,4 +1,16 @@
-/* фон всей страницы */
+/* ===== RESET (убираем белые рамки) ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* ===== AUTH (логин/регистрация) ===== */
+
 .auth-container {
   height: 100vh;
   display: flex;
@@ -7,7 +19,6 @@
   background: #12004b;
 }
 
-/* карточка */
 .auth-box {
   background: #3b2f7a;
   padding: 40px;
@@ -17,13 +28,11 @@
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
-/* иконка */
 .auth-icon {
   font-size: 40px;
   margin-bottom: 20px;
 }
 
-/* инпуты */
 .auth-input {
   width: 100%;
   padding: 10px;
@@ -33,7 +42,6 @@
   outline: none;
 }
 
-/* кнопка */
 .auth-button {
   margin-top: 15px;
   padding: 10px 20px;
@@ -43,12 +51,12 @@
   cursor: pointer;
 }
 
-/* ссылка */
 .auth-link {
   margin-top: 10px;
   color: #ccc;
   cursor: pointer;
 }
+
 /* ===== DASHBOARD ===== */
 
 .dashboard {
@@ -74,6 +82,13 @@
 .cards p {
   margin: 10px 0;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.menu p:hover,
+.folders p:hover,
+.cards p:hover {
+  opacity: 0.7;
 }
 
 .title {
@@ -99,6 +114,7 @@
   padding: 10px;
   border-radius: 20px;
   border: none;
+  outline: none;
 }
 
 /* КНОПКА ВЫЙТИ */
@@ -109,6 +125,11 @@
   padding: 10px 20px;
   border-radius: 20px;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout:hover {
+  background: #5a4bff;
 }
 
 /* HERO */
@@ -128,6 +149,12 @@
   border: 1px solid white;
   padding: 10px 20px;
   border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.continue-btn:hover {
+  background: #2e2bbf;
 }
 
 /* КАРТОЧКИ */
@@ -142,4 +169,11 @@
   background: #2a1f6f;
   padding: 15px;
   border-radius: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #3b2cff;
 }
