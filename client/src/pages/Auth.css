@@ -353,3 +353,17 @@ html, body, #root {
   opacity: 0.5;
   cursor: not-allowed;
 }
+/* крестик закрытия модалки */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+  transition: 0.2s;
+}
+
+.modal-close:hover {
+  color: white;
+}

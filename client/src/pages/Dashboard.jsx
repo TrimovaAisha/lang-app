@@ -47,7 +47,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h3 className="logo">  </h3>
+        <h3 className="logo"> </h3>
 
         <div className="menu">
           <p>
@@ -132,6 +132,12 @@ function Dashboard() {
           onClick={() => setShowModal(false)}
         >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
+            {/* Крестик в правом верхнем углу */}
+            <i
+              className="fa-solid fa-xmark modal-close"
+              onClick={() => setShowModal(false)}
+            ></i>
+
             <i className="fa-solid fa-folder modal-icon"></i>
             <input
               type="text"
