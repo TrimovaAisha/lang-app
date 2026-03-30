@@ -1,36 +1,48 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import './Auth.css'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const BASE_URL = "https://lang-app-64jf.onrender.com";
-
-  const handleRegister = async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      if (!res.ok) throw new Error(`Ошибка ${res.status}`);
-      navigate("/"); 
-    } catch (err) {
-      console.error("Ошибка при регистрации:", err);
-      alert("Не удалось зарегистрироваться");
-    }
-  };
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   return (
-    <div>
-      <h2>Регистрация</h2>
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Пароль" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleRegister}>Зарегистрироваться</button>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-icon">👤</div>
+
+        <input
+          className="auth-input"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          className="auth-input"
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          className="auth-button"
+          onClick={() => navigate('/')}
+        >
+          Зарегистрироваться
+        </button>
+
+        <p
+          className="auth-link"
+          onClick={() => navigate('/')}
+        >
+          Уже есть аккаунт?
+        </p>
+      </div>
     </div>
-  );
+  )
 }
 
-export default Register;
+export default Register

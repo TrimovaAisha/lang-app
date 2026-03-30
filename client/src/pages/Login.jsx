@@ -1,38 +1,48 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import './Auth.css'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const BASE_URL = "https://lang-app-64jf.onrender.com";
-
-  const handleLogin = async () => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      if (!res.ok) throw new Error(`Ошибка ${res.status}`);
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-    } catch (err) {
-      console.error("Ошибка при входе:", err);
-      alert("Неверный email или пароль");
-    }
-  };
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   return (
-    <div>
-      <h2>Вход</h2>
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Пароль" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Войти</button>
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-icon">👤</div>
+
+        <input
+          className="auth-input"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          className="auth-input"
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          className="auth-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          Вход
+        </button>
+
+        <p
+          className="auth-link"
+          onClick={() => navigate('/register')}
+        >
+          Регистрация
+        </p>
+      </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login
