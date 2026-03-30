@@ -367,3 +367,87 @@ html, body, #root {
 .modal-close:hover {
   color: white;
 }
+/* CARDS PAGE */
+
+.cards-page {
+  margin-top: 20px;
+}
+
+.cards-title {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  background: #3b2f7a;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.cards-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.import-btn {
+  background: #2a1f6f;
+  border: 1px solid white;
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* карточка */
+.card-editor {
+  background: #4b3d91;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.card-editor input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #2a1f6f;
+  color: white;
+}
+
+.card-delete {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+
+/* низ */
+.cards-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cards-bottom button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #3b2cff;
+  color: white;
+  cursor: pointer;
+}
+
+.create-btn {
+  background: #5c4dff;
+}
