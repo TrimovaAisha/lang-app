@@ -99,10 +99,10 @@ function Dashboard() {
 
         <div className="cards">
           <p className="title">Карточки</p>
-          <p>
+          <p onClick={() => navigate('/cards')}>
             <i className="fa-solid fa-layer-group"></i> Карточки
-          </p>
-        </div>
+            </p>
+            </div>
       </div>
 
       <div className="main">
