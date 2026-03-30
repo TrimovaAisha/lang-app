@@ -49,3 +49,97 @@
   color: #ccc;
   cursor: pointer;
 }
+/* ===== DASHBOARD ===== */
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: #0a0033;
+  color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  padding: 20px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.menu p,
+.folders p,
+.cards p {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.title {
+  margin-top: 20px;
+  opacity: 0.6;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+/* КНОПКА ВЫЙТИ */
+.logout {
+  background: #3b2cff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  margin-top: 20px;
+  height: 120px;
+  background: #2a1f6f;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.continue-btn {
+  background: #1c1a5e;
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+/* КАРТОЧКИ */
+.card-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.card {
+  background: #2a1f6f;
+  padding: 15px;
+  border-radius: 10px;
+}
