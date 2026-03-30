@@ -7,8 +7,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h3 className="logo">
-          <i className="fa-solid fa-house"></i>
+        <h3 className="logo">\
         </h3>
 
         <div className="menu">
