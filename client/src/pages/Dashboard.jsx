@@ -12,8 +12,12 @@ function Dashboard() {
         </h3>
 
         <div className="menu">
-          <p>Главная</p>
-          <p>Библиотека</p>
+          <p>
+            <i className="fa-solid fa-house"></i> Главная
+          </p>
+          <p>
+            <i className="fa-solid fa-book"></i> Библиотека
+          </p>
         </div>
 
         <div className="folders">
@@ -29,7 +33,7 @@ function Dashboard() {
         <div className="cards">
           <p className="title">Карточки</p>
           <p>
-            <i className="fa-solid fa-clone"></i> Карточки
+            <i className="fa-solid fa-layer-group"></i> Карточки
           </p>
         </div>
       </div>
