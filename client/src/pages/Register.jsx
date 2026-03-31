@@ -1,5 +1,5 @@
 import './Auth.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function Register() {

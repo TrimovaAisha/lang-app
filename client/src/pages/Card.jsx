@@ -1,20 +1,21 @@
 import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import CardItem from '../components/CardItem'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 
-const [folders, setFolders] = useState(["папка"])
-const [activeMenu, setActiveMenu] = useState(null)
-const [showModal, setShowModal] = useState(false)
-
-const deleteFolder = (index) => {
-  const updated = folders.filter((_, i) => i !== index)
-  setFolders(updated)
-}
 function Card() {
   const navigate = useNavigate()
+
+  const [folders, setFolders] = useState(["папка"])
+  const [activeMenu, setActiveMenu] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+
+  const deleteFolder = (index) => {
+    const updated = folders.filter((_, i) => i !== index)
+    setFolders(updated)
+  }
 
   const [cards, setCards] = useState([
     { term: '', definition: '' }
@@ -22,25 +23,21 @@ function Card() {
 
   const [title, setTitle] = useState('')
 
-  // добавление карточки
   const addCard = () => {
     setCards([...cards, { term: '', definition: '' }])
   }
 
-  // обновление карточки
   const updateCard = (index, field, value) => {
     const updated = [...cards]
     updated[index][field] = value
     setCards(updated)
   }
 
-  // удаление одной карточки
   const removeCard = (index) => {
     const updated = cards.filter((_, i) => i !== index)
     setCards(updated)
   }
 
-  // очистка всех
   const clearAll = () => {
     setCards([{ term: '', definition: '' }])
   }
@@ -48,18 +45,16 @@ function Card() {
   return (
     <div className="dashboard">
       <Sidebar
-      folders={folders}
-      activeMenu={activeMenu}
-      setActiveMenu={setActiveMenu}
-      setShowModal={setShowModal}
-      deleteFolder={deleteFolder}
+        folders={folders}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+        setShowModal={setShowModal}
+        deleteFolder={deleteFolder}
       />
-      {/* MAIN */}
-      <div className="main">
 
+      <div className="main">
         <Topbar />
 
-        {/* 🔥 CARDS PAGE */}
         <div className="cards-page">
 
           <input
@@ -71,11 +66,11 @@ function Card() {
 
           <div className="cards-actions">
             <button
-            className="import-btn"
-            onClick={() => navigate("/import")}
+              className="import-btn"
+              onClick={() => navigate("/import")}
             >
               + Импортировать
-              </button>
+            </button>
 
             <i
               className="fa-solid fa-trash delete-icon"
@@ -83,7 +78,6 @@ function Card() {
             ></i>
           </div>
 
-          {/* список карточек */}
           {cards.map((card, index) => (
             <CardItem
               key={index}
@@ -105,7 +99,6 @@ function Card() {
           </div>
 
         </div>
-
       </div>
     </div>
   )
