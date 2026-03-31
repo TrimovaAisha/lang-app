@@ -11,6 +11,7 @@ function Card() {
   const [folders, setFolders] = useState(["папка"])
   const [activeMenu, setActiveMenu] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [savedCards, setSavedCards] = useState([])
 
   const deleteFolder = (index) => {
     const updated = folders.filter((_, i) => i !== index)

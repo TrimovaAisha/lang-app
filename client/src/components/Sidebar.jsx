@@ -5,7 +5,8 @@ function Sidebar({
   activeMenu,
   setActiveMenu,
   setShowModal,
-  deleteFolder
+  deleteFolder,
+  cards = [] // добавили карточки
 }) {
   const navigate = useNavigate()
 
@@ -14,10 +15,11 @@ function Sidebar({
       <h3 className="logo"></h3>
 
       <div className="menu">
-        <p>
+        <p onClick={() => navigate("/dashboard")}>
           <i className="fa-solid fa-house"></i> Главная
         </p>
-        <p>
+
+        <p onClick={() => navigate("/library")}>
           <i className="fa-solid fa-book"></i> Библиотека
         </p>
       </div>
@@ -29,7 +31,7 @@ function Sidebar({
           <div
             className="folder-item"
             key={index}
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => navigate("/folder")}
           >
             <div className="folder-left">
               <i className="fa-solid fa-folder folder-icon"></i>
@@ -40,16 +42,15 @@ function Sidebar({
               <div className="folder-actions">
                 <i
                   className="fa-solid fa-ellipsis ellipsis-icon"
-                  onClick={() =>
+                  onClick={(e) => {
+                    e.stopPropagation()
                     setActiveMenu(activeMenu === index ? null : index)
-                  }
+                  }}
                 ></i>
 
                 {activeMenu === index && (
                   <div className="dropdown">
-                    <p onClick={() => deleteFolder(index)}>
-                      Удалить
-                    </p>
+                    <p onClick={() => deleteFolder(index)}>Удалить</p>
                   </div>
                 )}
               </div>
@@ -57,18 +58,22 @@ function Sidebar({
           </div>
         ))}
 
-        <p
-          onClick={() => setShowModal(true)}
-          className="add-folder"
-        >
+        <p onClick={() => setShowModal(true)} className="add-folder">
           <i className="fa-solid fa-plus"></i> новая папка
         </p>
       </div>
 
       <div className="cards">
         <p className="title">Карточки</p>
+
+        {cards.map((card, i) => (
+          <p key={i} onClick={() => navigate("/cards")}>
+            <i className="fa-solid fa-layer-group"></i> {card.title || "Без названия"}
+          </p>
+        ))}
+
         <p onClick={() => navigate("/cards")}>
-          <i className="fa-solid fa-layer-group"></i> Карточки
+          <i className="fa-solid fa-plus"></i> новая карточка
         </p>
       </div>
     </div>

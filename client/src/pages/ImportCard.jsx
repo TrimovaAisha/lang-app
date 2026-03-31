@@ -130,7 +130,7 @@ function ImportCard() {
                     type="radio"
                     checked={cardSeparator === "newline"}
                     onChange={() => setCardSeparator("newline")}
-                  /> Enter
+                  /> Отступ
                 </label>
 
                 <br />
