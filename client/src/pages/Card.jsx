@@ -2,7 +2,17 @@ import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import CardItem from '../components/CardItem'
+import Sidebar from "../components/SideBar"
+import Topbar from "../components/Topbar"
 
+const [folders, setFolders] = useState(["папка"])
+const [activeMenu, setActiveMenu] = useState(null)
+const [showModal, setShowModal] = useState(false)
+
+const deleteFolder = (index) => {
+  const updated = folders.filter((_, i) => i !== index)
+  setFolders(updated)
+}
 function Card() {
   const navigate = useNavigate()
 
@@ -37,37 +47,17 @@ function Card() {
 
   return (
     <div className="dashboard">
-
-      {/* SIDEBAR — 그대로 */}
-      <div className="sidebar">
-        <h3 className="logo"> </h3>
-
-        <div className="menu">
-          <p><i className="fa-solid fa-house"></i> Главная</p>
-          <p><i className="fa-solid fa-book"></i> Библиотека</p>
-        </div>
-
-        <div className="folders">
-          <p className="title">Ваши папки</p>
-          <p><i className="fa-solid fa-folder"></i> папка</p>
-        </div>
-
-        <div className="cards">
-          <p className="title">Карточки</p>
-          <p><i className="fa-solid fa-layer-group"></i> Карточки</p>
-        </div>
-      </div>
-
+      <Sidebar
+      folders={folders}
+      activeMenu={activeMenu}
+      setActiveMenu={setActiveMenu}
+      setShowModal={setShowModal}
+      deleteFolder={deleteFolder}
+      />
       {/* MAIN */}
       <div className="main">
 
-        {/* TOPBAR */}
-        <div className="topbar">
-          <input placeholder="Поиск..." />
-          <button className="logout" onClick={() => navigate('/')}>
-            Выйти
-          </button>
-        </div>
+        <Topbar />
 
         {/* 🔥 CARDS PAGE */}
         <div className="cards-page">

@@ -11,7 +11,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
 
-      {/* ✅ ИСПРАВЛЕНО ЗДЕСЬ */}
+      {}
       <Route path="/cards" element={<Card />} />
     </Routes>
   )
