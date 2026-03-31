@@ -1,5 +1,5 @@
 import './Auth.css'
-import Sidebar from '../components/SideBar'
+import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'

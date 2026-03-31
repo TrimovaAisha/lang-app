@@ -2,7 +2,7 @@ import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import CardItem from '../components/CardItem'
-import Sidebar from "../components/SideBar"
+import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 
 const [folders, setFolders] = useState(["папка"])
@@ -70,9 +70,12 @@ function Card() {
           />
 
           <div className="cards-actions">
-            <button className="import-btn">
+            <button
+            className="import-btn"
+            onClick={() => navigate("/import")}
+            >
               + Импортировать
-            </button>
+              </button>
 
             <i
               className="fa-solid fa-trash delete-icon"
