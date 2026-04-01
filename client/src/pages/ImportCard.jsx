@@ -1,5 +1,5 @@
 import "./Auth.css"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
@@ -50,7 +50,10 @@ function ImportCard() {
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}
         setShowModal={setShowModal}
-        deleteFolder={deleteFolder}
+        deleteFolder={(index) => {
+          const updated = folders.filter((_, i) => i !== index)
+          setFolders(updated)
+        }}
       />
 
       {/* MAIN */}
@@ -60,51 +63,18 @@ function ImportCard() {
 
         {/* IMPORT BLOCK */}
         <div className="cards-page">
-
-          <div style={{
-            background: "#1a115c",
-            padding: "20px",
-            borderRadius: "15px"
-          }}>
-
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "10px"
-            }}>
-              <p>
-                Импортировать данные. Скопируйте и вставьте свои данные
-              </p>
-
-              <i className="fa-solid fa-xmark"></i>
-            </div>
+          <div>
+            <p>Импортировать данные. Скопируйте и вставьте свои данные</p>
 
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder={`Слово 1\tОпределение 1\nСлово 2\tОпределение 2`}
-              style={{
-                width: "100%",
-                height: "150px",
-                borderRadius: "10px",
-                border: "none",
-                padding: "10px",
-                background: "#4b3d91",
-                color: "white",
-                marginBottom: "15px"
-              }}
             />
 
-            <div style={{
-              display: "flex",
-              gap: "50px",
-              marginBottom: "20px"
-            }}>
-
-              {/* TERM SEPARATOR */}
+            <div>
               <div>
                 <p>Между термином и определением</p>
-
                 <label>
                   <input
                     type="radio"
@@ -112,9 +82,6 @@ function ImportCard() {
                     onChange={() => setTermSeparator("tab")}
                   /> Tab
                 </label>
-
-                <br />
-
                 <label>
                   <input
                     type="radio"
@@ -124,10 +91,8 @@ function ImportCard() {
                 </label>
               </div>
 
-              {/* CARD SEPARATOR */}
               <div>
                 <p>Между карточками</p>
-
                 <label>
                   <input
                     type="radio"
@@ -135,9 +100,6 @@ function ImportCard() {
                     onChange={() => setCardSeparator("newline")}
                   /> Отступ
                 </label>
-
-                <br />
-
                 <label>
                   <input
                     type="radio"
@@ -146,23 +108,20 @@ function ImportCard() {
                   /> Точка с запятой
                 </label>
               </div>
-
             </div>
 
-            <div style={{ textAlign: "right" }}>
-              <button
-                className="create-btn"
-                onClick={handleImport}
-              >
-                Создать
-              </button>
-            </div>
-
+            <button onClick={handleImport}>Создать</button>
           </div>
-
         </div>
-
       </div>
+
+      {/* MODAL */}
+      <FolderModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setFolders={setFolders}
+      />
+
     </div>
   )
 }

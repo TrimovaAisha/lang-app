@@ -1,6 +1,6 @@
 import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import CardItem from '../components/CardItem'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
@@ -11,20 +11,10 @@ function Card() {
 
   const [activeMenu, setActiveMenu] = useState(null)
   const [showModal, setShowModal] = useState(false)
+
   const [folders, setFolders] = useState(() => {
     return JSON.parse(localStorage.getItem("folders")) || ["папка"]
-})
-
-  const deleteFolder = (index) => {
-    const updated = folders.filter((_, i) => i !== index)
-    setFolders(updated)
-  }
-  
-
-  // 🔥 СОХРАНЕНИЕ ПАПОК
-  useEffect(() => {
-    localStorage.setItem("folders", JSON.stringify(folders))
-  }, [folders])
+  })
 
   const [cards, setCards] = useState([
     { term: '', definition: '' }
@@ -51,7 +41,6 @@ function Card() {
     setCards([{ term: '', definition: '' }])
   }
 
-  // 🔥 СОХРАНЕНИЕ КАРТОЧЕК
   const saveCards = () => {
     if (!title.trim()) return
 
@@ -78,7 +67,11 @@ function Card() {
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}
         setShowModal={setShowModal}
-        deleteFolder={deleteFolder}
+        deleteFolder={(index) => {
+          const updated = folders.filter((_, i) => i !== index)
+          setFolders(updated)
+          localStorage.setItem("folders", JSON.stringify(updated))
+        }}
       />
 
       <div className="main">
@@ -129,6 +122,12 @@ function Card() {
 
         </div>
       </div>
+
+      <FolderModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setFolders={setFolders}
+      />
     </div>
   )
 }

@@ -7,7 +7,6 @@ function FolderModal({ showModal, setShowModal, setFolders }) {
     if (!folderName.trim()) return
 
     const existing = JSON.parse(localStorage.getItem("folders")) || ["папка"]
-
     const updated = [...existing, folderName]
 
     localStorage.setItem("folders", JSON.stringify(updated))

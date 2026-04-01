@@ -9,6 +9,7 @@ function Library() {
     return JSON.parse(localStorage.getItem("folders")) || ["папка"]
   })
   const [activeMenu, setActiveMenu] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const [cards, setCards] = useState([
     "название карточки",
@@ -24,18 +25,23 @@ function Library() {
 
   return (
     <div className="dashboard">
+
       <Sidebar
         folders={folders}
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}
-        deleteFolder={deleteFolder}
+        setShowModal={setShowModal}
+        deleteFolder={(index) => {
+          const updated = folders.filter((_, i) => i !== index)
+          setFolders(updated)
+        }}
       />
 
       <div className="main">
         <Topbar />
 
         <div className="library-page">
-          <h1 className="library-title">Ваша библиотека</h1>
+          <h1>Ваша библиотека</h1>
 
           <div className="library-tabs">
             <span>Модуль</span>
@@ -49,6 +55,14 @@ function Library() {
           ))}
         </div>
       </div>
+
+      {/* MODAL */}
+      <FolderModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setFolders={setFolders}
+      />
+
     </div>
   )
 }
