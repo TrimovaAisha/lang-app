@@ -1,16 +1,11 @@
-import "./Auth.css"
 import { useState } from "react"
-import Sidebar from "../components/Sidebar"
-import Topbar from "../components/Topbar"
 
 function Folders() {
   const [folders, setFolders] = useState(["папка"])
-  const [activeMenu, setActiveMenu] = useState(null)
   const [modules, setModules] = useState(["Название модуля"])
 
   const deleteFolder = (index) => {
-    const updated = folders.filter((_, i) => i !== index)
-    setFolders(updated)
+    setFolders(folders.filter((_, i) => i !== index))
   }
 
   const addModule = () => {
@@ -18,54 +13,36 @@ function Folders() {
   }
 
   const deleteModule = (index) => {
-    const updated = modules.filter((_, i) => i !== index)
-    setModules(updated)
+    setModules(modules.filter((_, i) => i !== index))
   }
 
   return (
-    <div className="dashboard">
-      <Sidebar
-        folders={folders}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        deleteFolder={deleteFolder}
-      />
+    <div style={{ padding: "20px" }}>
+      <h1>Folders Page</h1>
 
-      <div className="main">
-        <Topbar />
-
-        <div className="folder-page">
-          <h2 className="folder-header">Название папки</h2>
-
-          <div className="folder-actions-top">
-            <button className="add-module-btn" onClick={addModule}>
-              +
-            </button>
-
-            <i
-              className="fa-solid fa-trash delete-icon"
-              onClick={() => setModules([])}
-            ></i>
-          </div>
-
-          {modules.map((mod, index) => (
-            <div key={index} className="module-item">
-              <span>{mod}</span>
-
-              <i
-                className="fa-solid fa-trash"
-                onClick={() => deleteModule(index)}
-              ></i>
-            </div>
-          ))}
-
-          <div className="add-card-container">
-            <button className="create-btn">
-              Добавить карточку
-            </button>
-          </div>
+      {/* папки */}
+      <h2>Папки:</h2>
+      {folders.map((folder, index) => (
+        <div key={index}>
+          {folder}
+          <button onClick={() => deleteFolder(index)}>Удалить</button>
         </div>
-      </div>
+      ))}
+
+      {/* модули */}
+      <h2>Модули:</h2>
+      <button onClick={addModule}>Добавить модуль</button>
+
+      {modules.map((mod, index) => (
+        <div key={index}>
+          {mod}
+          <button onClick={() => deleteModule(index)}>Удалить</button>
+        </div>
+      ))}
+
+      <button style={{ marginTop: "20px" }}>
+        Добавить карточку
+      </button>
     </div>
   )
 }
