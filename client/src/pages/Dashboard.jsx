@@ -9,10 +9,28 @@ function Dashboard() {
 
   const [showModal, setShowModal] = useState(false)
   const [folderName, setFolderName] = useState('')
-  const [folders, setFolders] = useState(['папка'])
-  const [activeMenu, setActiveMenu] = useState(null) // для трёхточек
 
-  // закрытие по ESC
+  // 🔥 ПАПКИ С СОХРАНЕНИЕМ
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+  })
+
+  const [activeMenu, setActiveMenu] = useState(null)
+
+  // 🔥 СОХРАНЕНИЕ ПАПОК
+  useEffect(() => {
+    localStorage.setItem("folders", JSON.stringify(folders))
+  }, [folders])
+
+  // 🔥 КАРТОЧКИ
+  const [cardSets, setCardSets] = useState([])
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("cardSets")) || []
+    setCardSets(data)
+  }, [])
+
+  // ESC
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') {
@@ -24,7 +42,6 @@ function Dashboard() {
     return () => window.removeEventListener('keydown', handleKey)
   }, [])
 
-  // добавление папки
   const addFolder = () => {
     if (!folderName.trim()) return
     setFolders([...folders, folderName])
@@ -32,14 +49,12 @@ function Dashboard() {
     setShowModal(false)
   }
 
-  // удаление папки
   const deleteFolder = (index) => {
     const updated = folders.filter((_, i) => i !== index)
     setFolders(updated)
     setActiveMenu(null)
   }
 
-  // клик вне меню закрывает dropdown
   useEffect(() => {
     const handleClickOutside = () => setActiveMenu(null)
     window.addEventListener('click', handleClickOutside)
@@ -49,22 +64,31 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Sidebar
-      folders={folders}
-      activeMenu={activeMenu}
-      setActiveMenu={setActiveMenu}
-      setShowModal={setShowModal}
-      deleteFolder={deleteFolder}/>
+        folders={folders}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+        setShowModal={setShowModal}
+        deleteFolder={deleteFolder}
+      />
+
       <div className="main">
         <Topbar />
+
         <div className="hero">
           <button className="continue-btn">Продолжить</button>
         </div>
 
+        {/* 🔥 КАРТОЧКИ ИЗ localStorage */}
         <div className="card-grid">
-          <div className="card">название карточки</div>
-          <div className="card">название карточки</div>
-          <div className="card">название карточки</div>
-          <div className="card">название карточки</div>
+          {cardSets.map((set) => (
+            <div
+              key={set.id}
+              className="card"
+              onClick={() => navigate(`/cards/${set.id}`)}
+            >
+              {set.title}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -75,7 +99,6 @@ function Dashboard() {
           onClick={() => setShowModal(false)}
         >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            {/* Крестик в правом верхнем углу */}
             <i
               className="fa-solid fa-xmark modal-close"
               onClick={() => setShowModal(false)}

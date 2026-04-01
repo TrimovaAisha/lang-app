@@ -1,6 +1,6 @@
 import "./Auth.css"
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CardItem from '../components/CardItem'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
@@ -8,15 +8,23 @@ import Topbar from "../components/Topbar"
 function Card() {
   const navigate = useNavigate()
 
-  const [folders, setFolders] = useState(["папка"])
+  // 🔥 ПАПКИ СИНХРОНИЗИРОВАНЫ
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+  })
+
   const [activeMenu, setActiveMenu] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [savedCards, setSavedCards] = useState([])
 
   const deleteFolder = (index) => {
     const updated = folders.filter((_, i) => i !== index)
     setFolders(updated)
   }
+
+  // 🔥 СОХРАНЕНИЕ ПАПОК
+  useEffect(() => {
+    localStorage.setItem("folders", JSON.stringify(folders))
+  }, [folders])
 
   const [cards, setCards] = useState([
     { term: '', definition: '' }
@@ -41,6 +49,26 @@ function Card() {
 
   const clearAll = () => {
     setCards([{ term: '', definition: '' }])
+  }
+
+  // 🔥 СОХРАНЕНИЕ КАРТОЧЕК
+  const saveCards = () => {
+    if (!title.trim()) return
+
+    const newSet = {
+      id: Date.now(),
+      title,
+      cards
+    }
+
+    const existing = JSON.parse(localStorage.getItem("cardSets")) || []
+
+    localStorage.setItem(
+      "cardSets",
+      JSON.stringify([...existing, newSet])
+    )
+
+    navigate("/dashboard")
   }
 
   return (
@@ -94,7 +122,7 @@ function Card() {
               Добавить карточку
             </button>
 
-            <button className="create-btn">
+            <button className="create-btn" onClick={saveCards}>
               Создать
             </button>
           </div>
