@@ -17,32 +17,28 @@ function Folders() {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Folders Page</h1>
+    <div className="dashboard">
+      <div className="main">
+        <div className="folder-page">
+          <h2 className="folder-header">Название папки</h2>
 
-      {/* папки */}
-      <h2>Папки:</h2>
-      {folders.map((folder, index) => (
-        <div key={index}>
-          {folder}
-          <button onClick={() => deleteFolder(index)}>Удалить</button>
+          <div className="folder-actions-top">
+            <button className="add-module-btn" onClick={addModule}>+</button>
+            <i className="fa-solid fa-trash" onClick={() => setModules([])}></i>
+          </div>
+
+          {modules.map((mod, index) => (
+            <div key={index} className="module-item">
+              <span>{mod}</span>
+              <i className="fa-solid fa-trash" onClick={() => deleteModule(index)}></i>
+            </div>
+          ))}
+
+          <div className="add-card-container">
+            <button className="create-btn">Добавить карточку</button>
+          </div>
         </div>
-      ))}
-
-      {/* модули */}
-      <h2>Модули:</h2>
-      <button onClick={addModule}>Добавить модуль</button>
-
-      {modules.map((mod, index) => (
-        <div key={index}>
-          {mod}
-          <button onClick={() => deleteModule(index)}>Удалить</button>
-        </div>
-      ))}
-
-      <button style={{ marginTop: "20px" }}>
-        Добавить карточку
-      </button>
+      </div>
     </div>
   )
 }
