@@ -4,6 +4,8 @@ import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import API from "../api"
 import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Card() {
   const [cards, setCards] = useState([{ term: "", definition: "" }])

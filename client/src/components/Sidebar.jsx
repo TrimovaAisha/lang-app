@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom"
 
-function Sidebar({ folders, cards, setShowModal }) {
+function Sidebar({
+  folders = [],
+  cards = [],
+  setShowModal
+}) {
   const navigate = useNavigate()
 
   return (
@@ -17,28 +21,47 @@ function Sidebar({ folders, cards, setShowModal }) {
         </p>
       </div>
 
+      {/* FOLDERS */}
       <div className="folders">
         <p className="title">Ваши папки</p>
 
-        {folders.map((f) => (
-          <p key={f._id} onClick={() => navigate("/folders")}>
-            <i className="fa-solid fa-folder"></i> {f.name}
-          </p>
-        ))}
+        {(folders || []).length > 0 ? (
+          folders.map((f) => (
+            <p
+              key={f._id || f.name}
+              onClick={() => navigate("/folders")}
+            >
+              <i className="fa-solid fa-folder"></i> {f.name || f}
+            </p>
+          ))
+        ) : (
+          <p className="empty">Нет папок</p>
+        )}
 
-        <p onClick={() => setShowModal(true)} className="add-folder">
+        <p
+          onClick={() => setShowModal && setShowModal(true)}
+          className="add-folder"
+        >
           <i className="fa-solid fa-plus"></i> новая папка
         </p>
       </div>
 
+      {/* CARDS */}
       <div className="cards">
         <p className="title">Карточки</p>
 
-        {cards.map((c) => (
-          <p key={c._id} onClick={() => navigate(`/flash/${c._id}`)}>
-            <i className="fa-solid fa-layer-group"></i> {c.title}
-          </p>
-        ))}
+        {(cards || []).length > 0 ? (
+          cards.map((c) => (
+            <p
+              key={c._id || c.title}
+              onClick={() => c._id && navigate(`/flash/${c._id}`)}
+            >
+              <i className="fa-solid fa-layer-group"></i> {c.title}
+            </p>
+          ))
+        ) : (
+          <p className="empty">Нет карточек</p>
+        )}
 
         <p onClick={() => navigate("/cards")}>
           <i className="fa-solid fa-plus"></i> новая карточка

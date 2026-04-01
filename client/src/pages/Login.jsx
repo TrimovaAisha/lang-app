@@ -2,6 +2,8 @@ import './Auth.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Login() {
   const [email, setEmail] = useState('');

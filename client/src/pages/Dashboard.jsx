@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
 import FolderModal from '../components/FolderModal'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Dashboard() {
   const [cards, setCards] = useState([])

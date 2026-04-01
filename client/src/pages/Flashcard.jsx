@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import API from "../api"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Flashcard() {
   const { id } = useParams()

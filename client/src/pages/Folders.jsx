@@ -3,6 +3,8 @@ import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Folders() {
   const [folders, setFolders] = useState(() => {
