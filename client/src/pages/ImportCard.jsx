@@ -2,6 +2,7 @@ import "./Auth.css"
 import { useState, useEffect } from 'react'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
+import FolderModal from "../components/FolderModal"
 
 function ImportCard() {
   const [text, setText] = useState("")

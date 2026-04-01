@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import CardItem from '../components/CardItem'
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
+import FolderModal from "../components/FolderModal"
 
 function Card() {
   const navigate = useNavigate()
