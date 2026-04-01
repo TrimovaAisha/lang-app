@@ -1,15 +1,15 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const API = axios.create({
   baseURL: 'https://lang-app-64jf.onrender.com/api'
-})
+});
 
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return config
-})
+  return config;
+});
 
-export default API
+export default API;
