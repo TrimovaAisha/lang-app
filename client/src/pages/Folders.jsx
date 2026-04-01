@@ -2,12 +2,13 @@ import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
-
 function Folders() {
-  const [folders, setFolders] = useState(["папка"])
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+  })
   const [modules, setModules] = useState(["Название модуля"])
-  const [activeMenu, setActiveMenu] = useState(null) // для Sidebar
-
+  const [activeMenu, setActiveMenu] = useState(null) 
+  const [showModal, setShowModal] = useState(false)
   const addModule = () => {
     setModules([...modules, "Название модуля"])
   }

@@ -5,7 +5,9 @@ import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
 
 function Library() {
-  const [folders, setFolders] = useState(["папка"])
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+  })
   const [activeMenu, setActiveMenu] = useState(null)
 
   const [cards, setCards] = useState([

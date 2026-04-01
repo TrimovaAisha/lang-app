@@ -9,18 +9,17 @@ import FolderModal from "../components/FolderModal"
 function Card() {
   const navigate = useNavigate()
 
-  // 🔥 ПАПКИ СИНХРОНИЗИРОВАНЫ
-  const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
-  })
-
   const [activeMenu, setActiveMenu] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+})
 
   const deleteFolder = (index) => {
     const updated = folders.filter((_, i) => i !== index)
     setFolders(updated)
   }
+  
 
   // 🔥 СОХРАНЕНИЕ ПАПОК
   useEffect(() => {

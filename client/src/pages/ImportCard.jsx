@@ -9,10 +9,12 @@ function ImportCard() {
   const [termSeparator, setTermSeparator] = useState("tab")
   const [cardSeparator, setCardSeparator] = useState("newline")
 
-  const [folders, setFolders] = useState(["папка"])
+  const [folders, setFolders] = useState(() => {
+    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+  })
   const [activeMenu, setActiveMenu] = useState(null)
   const [showModal, setShowModal] = useState(false)
-
+  
   const deleteFolder = (index) => {
     const updated = folders.filter((_, i) => i !== index)
     setFolders(updated)
