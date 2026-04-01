@@ -33,7 +33,7 @@ function Sidebar({
           <div
             className="folder-item"
             key={index}
-            onClick={() => navigate("/folders")}
+            onClick={() => navigate("/folders")} // ✅ переход
           >
             <div className="folder-left">
               <i className="fa-solid fa-folder folder-icon"></i>
@@ -60,7 +60,11 @@ function Sidebar({
           </div>
         ))}
 
-        <p onClick={() => setShowModal(true)} className="add-folder">
+        {/* ❗ тут меняем — теперь НЕ modal, а переход */}
+        <p
+          onClick={() => navigate("/folders")}
+          className="add-folder"
+        >
           <i className="fa-solid fa-plus"></i> новая папка
         </p>
       </div>
