@@ -4,8 +4,9 @@ import Register from "./pages/Register"
 import Dashboard from "./pages/Dashboard"
 import Card from "./pages/Card"
 import ImportCard from "./pages/ImportCard"
-import Folders from "./pages/Folders"
+import Flashcard from "./pages/Flashcard"
 import Library from "./pages/Library"
+import Folders from "./pages/Folders"
 
 function App() {
   return (
@@ -13,16 +14,11 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
-
-      {/* карточки */}
       <Route path="/cards" element={<Card />} />
       <Route path="/import" element={<ImportCard />} />
-
-      {/* папки */}
-      <Route path="/folders" element={<Folders />} />
-
-      {/* библиотека */}
+      <Route path="/flash/:id" element={<Flashcard />} />
       <Route path="/library" element={<Library />} />
+      <Route path="/folders" element={<Folders />} />
     </Routes>
   )
 }

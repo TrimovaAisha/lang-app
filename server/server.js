@@ -2,37 +2,44 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-if (!process.env.JWT_SECRET) {
-  console.log("❌ JWT_SECRET missing");
-}
+
 const authRoutes = require("./routes/Auth");
 const eventRoutes = require("./routes/events");
+const cardRoutes = require("./routes/cards");
+const folderRoutes = require("./routes/folders");
 
 const app = express();
+
 app.use(cors({
   origin: [
-    'https://lang-app-two.vercel.app'
+    "http://localhost:5173",
+    "https://lang-app-two.vercel.app"
   ]
 }));
+
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/cards", cardRoutes);
+app.use("/api/folders", folderRoutes);
 
-const User = require("./models/User");
-// Подключение к MongoDB
 const PORT = process.env.PORT || 5000;
+
 async function startServer() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ MongoDB connected");
-    // Роут для проверки
+
     app.get("/api/test", (req, res) => {
       res.json({ message: "Server works!" });
     });
 
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`Server running on port ${PORT}`)
+    );
   } catch (err) {
-    console.error("❌ MongoDB connection error:", err);
+    console.error("❌ MongoDB error:", err);
   }
 }
 

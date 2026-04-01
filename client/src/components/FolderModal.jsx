@@ -1,46 +1,23 @@
 import { useState } from "react"
+import API from "../api"
 
-function FolderModal({ showModal, setShowModal, setFolders }) {
-  const [folderName, setFolderName] = useState("")
+function FolderModal({ showModal, setShowModal, reload }) {
+  const [name, setName] = useState("")
 
-  const addFolder = () => {
-    if (!folderName.trim()) return
-
-    const existing = JSON.parse(localStorage.getItem("folders")) || ["папка"]
-    const updated = [...existing, folderName]
-
-    localStorage.setItem("folders", JSON.stringify(updated))
-    setFolders(updated)
-
-    setFolderName("")
+  const create = async () => {
+    await API.post("/folders", { name })
     setShowModal(false)
+    setName("")
+    reload && reload()
   }
 
   if (!showModal) return null
 
   return (
-    <div
-      className="modal-overlay"
-      onClick={() => setShowModal(false)}
-    >
+    <div className="modal-overlay" onClick={() => setShowModal(false)}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <i
-          className="fa-solid fa-xmark modal-close"
-          onClick={() => setShowModal(false)}
-        ></i>
-
-        <i className="fa-solid fa-folder modal-icon"></i>
-
-        <input
-          type="text"
-          placeholder="Укажите название папки"
-          value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
-        />
-
-        <button disabled={!folderName.trim()} onClick={addFolder}>
-          Создать
-        </button>
+        <input value={name} onChange={(e) => setName(e.target.value)} />
+        <button onClick={create}>Создать</button>
       </div>
     </div>
   )

@@ -1,133 +1,53 @@
 import "./Auth.css"
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import CardItem from '../components/CardItem'
+import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
-import FolderModal from "../components/FolderModal"
+import API from "../api"
+import { useNavigate } from "react-router-dom"
 
 function Card() {
+  const [cards, setCards] = useState([{ term: "", definition: "" }])
+  const [title, setTitle] = useState("")
+  const [folders, setFolders] = useState([])
+  const [allCards, setAllCards] = useState([])
   const navigate = useNavigate()
 
-  const [activeMenu, setActiveMenu] = useState(null)
-  const [showModal, setShowModal] = useState(false)
+  const addCard = () => setCards([...cards, { term: "", definition: "" }])
 
-  const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
-  })
-
-  const [cards, setCards] = useState([
-    { term: '', definition: '' }
-  ])
-
-  const [title, setTitle] = useState('')
-
-  const addCard = () => {
-    setCards([...cards, { term: '', definition: '' }])
+  const updateCard = (i, field, value) => {
+    const copy = [...cards]
+    copy[i][field] = value
+    setCards(copy)
   }
 
-  const updateCard = (index, field, value) => {
-    const updated = [...cards]
-    updated[index][field] = value
-    setCards(updated)
-  }
-
-  const removeCard = (index) => {
-    const updated = cards.filter((_, i) => i !== index)
-    setCards(updated)
-  }
-
-  const clearAll = () => {
-    setCards([{ term: '', definition: '' }])
-  }
-
-  const saveCards = () => {
-    if (!title.trim()) return
-
-    const newSet = {
-      id: Date.now(),
-      title,
-      cards
-    }
-
-    const existing = JSON.parse(localStorage.getItem("cardSets")) || []
-
-    localStorage.setItem(
-      "cardSets",
-      JSON.stringify([...existing, newSet])
-    )
-
+  const save = async () => {
+    await API.post("/cards", { title, cards })
     navigate("/dashboard")
   }
 
   return (
     <div className="dashboard">
-      <Sidebar
-        folders={folders}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setShowModal={setShowModal}
-        deleteFolder={(index) => {
-          const updated = folders.filter((_, i) => i !== index)
-          setFolders(updated)
-          localStorage.setItem("folders", JSON.stringify(updated))
-        }}
-      />
+      <Sidebar folders={folders} cards={allCards} setShowModal={() => {}} />
 
       <div className="main">
         <Topbar />
 
         <div className="cards-page">
+          <input className="cards-title" placeholder="Название" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-          <input
-            className="cards-title"
-            placeholder="Название"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-
-          <div className="cards-actions">
-            <button
-              className="import-btn"
-              onClick={() => navigate("/import")}
-            >
-              + Импортировать
-            </button>
-
-            <i
-              className="fa-solid fa-trash delete-icon"
-              onClick={clearAll}
-            ></i>
-          </div>
-
-          {cards.map((card, index) => (
-            <CardItem
-              key={index}
-              card={card}
-              index={index}
-              updateCard={updateCard}
-              removeCard={removeCard}
-            />
+          {cards.map((c, i) => (
+            <div key={i} className="card-editor">
+              <input placeholder="Термин" value={c.term} onChange={(e) => updateCard(i, "term", e.target.value)} />
+              <input placeholder="Определение" value={c.definition} onChange={(e) => updateCard(i, "definition", e.target.value)} />
+            </div>
           ))}
 
           <div className="cards-bottom">
-            <button onClick={addCard}>
-              Добавить карточку
-            </button>
-
-            <button className="create-btn" onClick={saveCards}>
-              Создать
-            </button>
+            <button onClick={addCard}>Добавить</button>
+            <button className="create-btn" onClick={save}>Создать</button>
           </div>
-
         </div>
       </div>
-
-      <FolderModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setFolders={setFolders}
-      />
     </div>
   )
 }

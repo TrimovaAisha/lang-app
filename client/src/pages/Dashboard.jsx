@@ -1,122 +1,48 @@
 import './Auth.css'
 import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import API from '../api'
+import FolderModal from '../components/FolderModal'
 
 function Dashboard() {
+  const [cards, setCards] = useState([])
+  const [folders, setFolders] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [search, setSearch] = useState("")
   const navigate = useNavigate()
 
-  const [showModal, setShowModal] = useState(false)
-  const [folderName, setFolderName] = useState('')
-
-  // 🔥 ПАПКИ С СОХРАНЕНИЕМ
-  const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
-  })
-
-  const [activeMenu, setActiveMenu] = useState(null)
-
-  // 🔥 СОХРАНЕНИЕ ПАПОК
   useEffect(() => {
-    localStorage.setItem("folders", JSON.stringify(folders))
-  }, [folders])
-
-  // 🔥 КАРТОЧКИ
-  const [cardSets, setCardSets] = useState([])
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("cardSets")) || []
-    setCardSets(data)
+    loadData()
   }, [])
 
-  // ESC
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === 'Escape') {
-        setShowModal(false)
-        setActiveMenu(null)
-      }
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [])
-
-  const addFolder = () => {
-    if (!folderName.trim()) return
-    setFolders([...folders, folderName])
-    setFolderName('')
-    setShowModal(false)
+  const loadData = async () => {
+    const c = await API.get('/cards')
+    const f = await API.get('/folders')
+    setCards(c.data)
+    setFolders(f.data)
   }
 
-  const deleteFolder = (index) => {
-    const updated = folders.filter((_, i) => i !== index)
-    setFolders(updated)
-    setActiveMenu(null)
-  }
-
-  useEffect(() => {
-    const handleClickOutside = () => setActiveMenu(null)
-    window.addEventListener('click', handleClickOutside)
-    return () => window.removeEventListener('click', handleClickOutside)
-  }, [])
+  const filtered = cards.filter(c => c.title.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <div className="dashboard">
-      <Sidebar
-        folders={folders}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setShowModal={setShowModal}
-        deleteFolder={deleteFolder}
-      />
+      <Sidebar folders={folders} cards={cards} setShowModal={setShowModal} />
 
       <div className="main">
-        <Topbar />
+        <Topbar setSearch={setSearch} />
 
-        <div className="hero">
-          <button className="continue-btn">Продолжить</button>
-        </div>
-
-        {/* 🔥 КАРТОЧКИ ИЗ localStorage */}
         <div className="card-grid">
-          {cardSets.map((set) => (
-            <div
-              key={set.id}
-              className="card"
-              onClick={() => navigate(`/cards/${set.id}`)}
-            >
-              {set.title}
+          {filtered.map(c => (
+            <div key={c._id} className="card" onClick={() => navigate(`/flash/${c._id}`)}>
+              {c.title}
             </div>
           ))}
         </div>
       </div>
 
-      {/* МОДАЛКА */}
-      {showModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowModal(false)}
-        >
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <i
-              className="fa-solid fa-xmark modal-close"
-              onClick={() => setShowModal(false)}
-            ></i>
-
-            <i className="fa-solid fa-folder modal-icon"></i>
-            <input
-              type="text"
-              placeholder="Укажите название папки"
-              value={folderName}
-              onChange={(e) => setFolderName(e.target.value)}
-            />
-            <button disabled={!folderName.trim()} onClick={addFolder}>
-              Создать
-            </button>
-          </div>
-        </div>
-      )}
+      <FolderModal showModal={showModal} setShowModal={setShowModal} reload={loadData} />
     </div>
   )
 }
