@@ -4,10 +4,6 @@ function Folders() {
   const [folders, setFolders] = useState(["папка"])
   const [modules, setModules] = useState(["Название модуля"])
 
-  const deleteFolder = (index) => {
-    setFolders(folders.filter((_, i) => i !== index))
-  }
-
   const addModule = () => {
     setModules([...modules, "Название модуля"])
   }
@@ -22,21 +18,27 @@ function Folders() {
         <div className="folder-page">
           <h2 className="folder-header">Название папки</h2>
 
+          {/* Верхняя панель: + и корзина */}
           <div className="folder-actions-top">
             <button className="add-module-btn" onClick={addModule}>+</button>
-            <i className="fa-solid fa-trash" onClick={() => setModules([])}></i>
+            <i 
+              className="fa-solid fa-trash delete-icon" 
+              onClick={() => setModules([])}
+            ></i>
           </div>
 
+          {/* Список модулей */}
           {modules.map((mod, index) => (
             <div key={index} className="module-item">
               <span>{mod}</span>
-              <i className="fa-solid fa-trash" onClick={() => deleteModule(index)}></i>
+              <i 
+                className="fa-solid fa-trash" 
+                onClick={() => deleteModule(index)}
+              ></i>
             </div>
           ))}
 
-          <div className="add-card-container">
-            <button className="create-btn">Добавить карточку</button>
-          </div>
+          {/* Кнопка «Добавить карточку» убрана */}
         </div>
       </div>
     </div>
