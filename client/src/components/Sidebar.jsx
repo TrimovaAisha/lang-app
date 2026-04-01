@@ -25,7 +25,7 @@ function Sidebar({
         </p>
       </div>
 
-      {/* Пользовательские папки */}
+      {/* Папки */}
       <div className="folders">
         <p className="title">Ваши папки</p>
 
@@ -60,9 +60,9 @@ function Sidebar({
           </div>
         ))}
 
-        {/* ❗ тут меняем — теперь НЕ modal, а переход */}
+        {/* ✅ ВАЖНО: МОДАЛКА, а не переход */}
         <p
-          onClick={() => navigate("/folders")}
+          onClick={() => setShowModal(true)}
           className="add-folder"
         >
           <i className="fa-solid fa-plus"></i> новая папка
