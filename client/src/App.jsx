@@ -19,7 +19,7 @@ function App() {
       <Route path="/import" element={<ImportCard />} />
 
       {/* новые страницы */}
-      <Route path="/folders" element={<Folders />} />
+      <Route path="/folder" element={<Folders />} />
       <Route path="/library" element={<Library />} />
     </Routes>
   )
