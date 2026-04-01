@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
 function Sidebar({
-  folders = [],
+  folders,
   activeMenu,
   setActiveMenu,
   setShowModal,
   deleteFolder,
-  cards = [] // карточки
+  cards = []
 }) {
   const navigate = useNavigate()
 
@@ -23,18 +23,6 @@ function Sidebar({
         <p onClick={() => navigate("/library")}>
           <i className="fa-solid fa-book"></i> Библиотека
         </p>
-
-        <p onClick={() => navigate("/folders")}>
-          <i className="fa-solid fa-folder"></i> Папки
-        </p>
-
-        <p onClick={() => navigate("/cards")}>
-          <i className="fa-solid fa-layer-group"></i> Карточки
-        </p>
-
-        <p onClick={() => navigate("/import")}>
-          <i className="fa-solid fa-upload"></i> Импорт
-        </p>
       </div>
 
       {/* Пользовательские папки */}
@@ -45,7 +33,7 @@ function Sidebar({
           <div
             className="folder-item"
             key={index}
-            onClick={() => navigate("/folders")} // переходим на страницу папок
+            onClick={() => navigate("/folders")}
           >
             <div className="folder-left">
               <i className="fa-solid fa-folder folder-icon"></i>
