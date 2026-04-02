@@ -1,20 +1,68 @@
-<<<<<<< HEAD
-# React + Vite
+HighLang — веб-приложение для создания, хранения и изучения языков в виде карточек. 
+Позволяет пользователям создавать папки, модули и карточки, а также изучать их в интерактивной библиотеке.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Основные возможности:
+Создание и управление папками
+Создание модулей и добавление их в папки
+Добавление карточек в модули
+Удобная библиотека для просмотра карточек и папок
+Адаптивный дизайн для мобильных, планшетов, ноутбуков и больших экранов
+Модальное окно выбора существующих модулей для добавления в папку
+Удаление конкретной карточки или модуля через кнопку корзины
+Встроенный режим обучения (просмотр и переворот карточек)
 
-Currently, two official plugins are available:
+# Клонировать репозиторий
+git clone https://github.com/TrimovaAisha/lang-app.git
+cd lang-app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# Установить зависимости
+npm install
 
-## React Compiler
+# Запуск приложения в режиме разработки
+npm start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Сборка для продакшена
+npm run build
 
-## Expanding the ESLint configuration
+Руководство пользователя:
+1. Авторизация
+Страница входа с полями Email и Пароль
+Кнопка Войти и ссылка на регистрацию
+2. Панель навигации (Sidebar)
+Папки: список папок
+Модули: добавление и удаление модулей
+Карточки: просмотр карточек внутри модулей
+Кнопка + для добавления новой папки или модуля
+3. Добавление карточек и модулей
+Кнопка + открывает модальное окно
+Выбор существующего модуля из списка или создание нового
+Карточки можно удалять через кнопку корзины
+4. Библиотека
+Две вкладки: Модули и Папки
+Вкладка Модули показывает все карточки
+Вкладка Папки показывает папки и их модули
+Нажатие на карточку открывает просмотр с возможностью изучения (переворот)
+5. Режим обучения
+Выбор карточки открывает интерактивную карточку с фронт/бэк
+Кнопки Следующая, Предыдущая для навигации
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# lang-app
->>>>>>> e5d996fbe3e25d40622eb79969b8a423417a867e
+Скриншоты интерфейса:
+Главная библиотека
+![alt text](image-1.png)
+Модальное окно добавления модуля
+![alt text](image-2.png)
+Просмотр карточки
+![alt text](image.png)
+
+Технологии
+React 18
+React Hooks (useState, useEffect)
+CSS3 (Flexbox, Grid, медиа-запросы)
+FontAwesome для иконок
+Поддержка адаптивности на все устройства
+Vercel для деплоя
+
+Деплой
+Приложение полностью готово к деплою на Vercel
+Для деплоя: npm run build → загрузить папку build в Vercel
+Работает без сервера (данные хранятся в state), легко подключить API позже
