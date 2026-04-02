@@ -37,7 +37,7 @@ function Dashboard() {
 
         <div className="card-grid">
           {filtered.map(c => (
-            <div key={c._id} className="card" onClick={() => navigate(`/flash/${c._id}`)}>
+            <div key={c._id} className="card" onClick={() => navigate(`/study/${c._id}`)}>
               {c.title}
             </div>
           ))}
