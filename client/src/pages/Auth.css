@@ -846,3 +846,112 @@ html, body, #root {
   border-radius: 8px;
   cursor: pointer;
 }
+.card {
+  position: relative;
+  background: #2c2c4a;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+/* кнопка троеточия */
+.card-menu-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+/* меню */
+.card-menu {
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  background: #1f1f3a;
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 10;
+}
+
+.card-menu button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.library-card {
+  position: relative;
+  background: #2c2c4a;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+/* кнопка троеточия */
+.card-menu-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+/* выпадающее меню */
+.card-menu {
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  background: #1f1f3a;
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 10;
+}
+
+.card-menu button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.folder-page {
+  padding: 20px;
+}
+
+.folder-actions-top button {
+  margin-bottom: 10px;
+}
+
+.module-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c2c4a;
+  color: white;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+.modules-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.module-select-item {
+  background: #1f1f3a;
+  color: white;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.module-select-item:hover {
+  background: #3a3a5a;
+}

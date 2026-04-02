@@ -61,7 +61,7 @@ function Card() {
           <div className="card-actions">
 
             <button onClick={() => navigate("/import")}>
-              <FontAwesomeIcon icon={faPlus} /> Import
+              <FontAwesomeIcon icon={faPlus} /> Импортировать
             </button>
 
             <button onClick={clearCards}>

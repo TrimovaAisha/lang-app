@@ -1,36 +1,51 @@
 import "./Auth.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
+import API from "../api"
 
 function Library() {
-  const [folders, setFolders] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("folders") || "[]")
-    } catch {
-      return []
-    }
-  })
-
-  const [cards, setCards] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("cards") || "[]")
-    } catch {
-      return []
-    }
-  })
-
+  const [folders, setFolders] = useState([])
+  const [cards, setCards] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState("cards")
+  const [menuOpenId, setMenuOpenId] = useState(null)
 
-  // ✅ удаление папки
-  const handleDeleteFolder = (index) => {
-    setFolders(prev => {
-      const updated = prev.filter((_, i) => i !== index)
-      localStorage.setItem("folders", JSON.stringify(updated))
-      return updated
-    })
+  // --- загрузка данных с сервера ---
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  const loadData = async () => {
+    try {
+      const c = await API.get("/cards")
+      const f = await API.get("/folders")
+      setCards(c.data)
+      setFolders(f.data)
+    } catch (e) {
+      console.error("Ошибка загрузки:", e)
+    }
+  }
+
+  // --- удаление карточки ---
+  const deleteCard = async (id) => {
+    try {
+      await API.delete(`/cards/${id}`)
+      setCards(prev => prev.filter(c => c._id !== id))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // --- удаление папки ---
+  const deleteFolder = async (id) => {
+    try {
+      await API.delete(`/folders/${id}`)
+      setFolders(prev => prev.filter(f => f._id !== id))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -40,9 +55,9 @@ function Library() {
         folders={folders}
         cards={cards}
         setShowModal={setShowModal}
-        deleteFolder={handleDeleteFolder}
-        setActiveMenu={() => {}}   
-        activeMenu={null}        
+        deleteFolder={deleteFolder}
+        setActiveMenu={() => {}}
+        activeMenu={null}
       />
 
       <div className="main">
@@ -58,7 +73,6 @@ function Library() {
             >
               Модуль
             </span>
-
             <span
               className={activeTab === "folders" ? "active" : ""}
               onClick={() => setActiveTab("folders")}
@@ -72,9 +86,34 @@ function Library() {
             cards.length === 0 ? (
               <p>Нет карточек</p>
             ) : (
-              cards.map((card, index) => (
-                <div key={index} className="library-card">
-                  {card.title || card}
+              cards.map((card) => (
+                <div key={card._id} className="library-card">
+                  <div>{card.title}</div>
+
+                  {/* ⋮ меню */}
+                  <div
+                    className="card-menu-btn"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setMenuOpenId(menuOpenId === card._id ? null : card._id)
+                    }}
+                  >
+                    ⋮
+                  </div>
+
+                  {menuOpenId === card._id && (
+                    <div className="card-menu">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          deleteCard(card._id)
+                          setMenuOpenId(null)
+                        }}
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
             )
@@ -85,20 +124,46 @@ function Library() {
             folders.length === 0 ? (
               <p>Нет папок</p>
             ) : (
-              folders.map((folder, index) => (
-                <div key={index} className="library-card">
-                  {folder.name || folder}
+              folders.map((folder) => (
+                <div key={folder._id} className="library-card">
+                  <div>{folder.name}</div>
+
+                  {/* ⋮ меню */}
+                  <div
+                    className="card-menu-btn"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setMenuOpenId(menuOpenId === folder._id ? null : folder._id)
+                    }}
+                  >
+                    ⋮
+                  </div>
+
+                  {menuOpenId === folder._id && (
+                    <div className="card-menu">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          deleteFolder(folder._id)
+                          setMenuOpenId(null)
+                        }}
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
             )
           )}
+
         </div>
       </div>
 
       <FolderModal
-      showModal={showModal}
-      setShowModal={setShowModal}
-      setFolders={setFolders}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setFolders={setFolders}
       />
 
     </div>
