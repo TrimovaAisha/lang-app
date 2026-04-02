@@ -766,11 +766,34 @@ html, body, #root {
   margin-bottom: 30px;
 }
 
-/* карточка */
+/* ОБЕРТКА */
+.study-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/* РАМКА */
+.study-box {
+  width: 800px;
+  padding: 40px;
+  background: #0b0033;
+  border-radius: 20px;
+  border: 2px solid #2a2a5a;
+  text-align: center;
+}
+
+/* ЗАГОЛОВОК */
+.study-title {
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* КАРТОЧКА */
 .study-card {
-  width: 500px;
+  width: 100%;
   height: 250px;
-  margin: 0 auto;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -778,15 +801,16 @@ html, body, #root {
 .card-inner {
   width: 100%;
   height: 100%;
-  position: relative;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+  position: relative;
 }
 
 .study-card.flipped .card-inner {
   transform: rotateY(180deg);
 }
 
+/* ОБЕ СТОРОНЫ */
 .card-front,
 .card-back {
   position: absolute;
@@ -798,21 +822,19 @@ html, body, #root {
   justify-content: center;
   font-size: 22px;
   backface-visibility: hidden;
-}
-
-.card-front {
   background: #5b5b8a;
   color: white;
 }
 
+/* ЗАДНЯЯ */
 .card-back {
-  background: #3b3b6d;
-  color: white;
   transform: rotateY(180deg);
+  background: #3b3b6d;
 }
 
+/* КНОПКИ */
 .study-controls {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .study-controls button {
