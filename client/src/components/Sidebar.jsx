@@ -4,8 +4,8 @@ import { useState } from "react"
 function Sidebar({
   folders = [],
   cards = [],
-  setShowModal,
-  deleteFolder
+  setShowModal = () => {},   // ✅ дефолт
+  deleteFolder = () => {}    // ✅ дефолт (фикс ошибки)
 }) {
   const navigate = useNavigate()
   const [openMenuIndex, setOpenMenuIndex] = useState(null)
@@ -47,10 +47,12 @@ function Sidebar({
 
               {openMenuIndex === index && (
                 <div className="dropdown">
-                  <p onClick={() => {
-                    deleteFolder(index)
-                    setOpenMenuIndex(null)
-                  }}>
+                  <p
+                    onClick={() => {
+                      deleteFolder(index) // ✅ теперь всегда функция
+                      setOpenMenuIndex(null)
+                    }}
+                  >
                     Удалить
                   </p>
                 </div>
@@ -73,7 +75,8 @@ function Sidebar({
         {cards.length > 0 ? (
           cards.map((c, index) => (
             <p key={index}>
-              <i className="fa-solid fa-layer-group"></i> {typeof c === "string" ? c : c.title}
+              <i className="fa-solid fa-layer-group"></i>{" "}
+              {typeof c === "string" ? c : c.title}
             </p>
           ))
         ) : (
