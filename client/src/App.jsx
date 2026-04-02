@@ -7,6 +7,7 @@ import ImportCard from "./pages/ImportCard"
 import Flashcard from "./pages/Flashcard"
 import Library from "./pages/Library"
 import Folders from "./pages/Folders"
+import Study from "./pages/Study"
 
 function App() {
   return (
