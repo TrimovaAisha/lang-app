@@ -96,12 +96,9 @@ function Library() {
       </div>
 
       <FolderModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setFolders={(newFolders) => {
-          setFolders(newFolders)
-          localStorage.setItem("folders", JSON.stringify(newFolders))
-        }}
+      showModal={showModal}
+      setShowModal={setShowModal}
+      setFolders={setFolders}
       />
 
     </div>

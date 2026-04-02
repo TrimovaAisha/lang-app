@@ -1,6 +1,10 @@
 import { useState } from "react"
 
-function FolderModal({ showModal, setShowModal, setFolders }) {
+function FolderModal({
+  showModal,
+  setShowModal = () => {},   // ✅ защита
+  setFolders = () => {}      // ✅ защита (ВАЖНО)
+}) {
   const [name, setName] = useState("")
 
   if (!showModal) return null
@@ -9,7 +13,7 @@ function FolderModal({ showModal, setShowModal, setFolders }) {
     if (!name.trim()) return
 
     setFolders(prev => {
-      const updated = [...prev, name]
+      const updated = [...(prev || []), name]   // ✅ защита
       localStorage.setItem("folders", JSON.stringify(updated))
       return updated
     })
@@ -22,12 +26,10 @@ function FolderModal({ showModal, setShowModal, setFolders }) {
     <div className="modal-overlay">
       <div className="modal">
 
-        {/* ❌ крестик */}
         <span className="close" onClick={() => setShowModal(false)}>
           <i className="fa-solid fa-xmark"></i>
         </span>
 
-        {/* 📁 иконка */}
         <div className="modal-icon">
           <i className="fa-solid fa-folder"></i>
         </div>
