@@ -8,7 +8,11 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Folders() {
   const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+    try {
+      return JSON.parse(localStorage.getItem("folders") || "[]")
+    } catch {
+      return ["папка"]
+    }
   })
 
   const [modules, setModules] = useState(["Название модуля"])
@@ -35,6 +39,7 @@ function Folders() {
           setFolders(updated)
           localStorage.setItem("folders", JSON.stringify(updated))
         }}
+        cards={[]}   
       />
 
       <div className="main">

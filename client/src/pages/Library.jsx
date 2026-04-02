@@ -6,11 +6,19 @@ import FolderModal from "../components/FolderModal"
 
 function Library() {
   const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || []
+    try {
+      return JSON.parse(localStorage.getItem("folders") || "[]")
+    } catch {
+      return []
+    }
   })
 
   const [cards, setCards] = useState(() => {
-    return JSON.parse(localStorage.getItem("cards")) || []
+    try {
+      return JSON.parse(localStorage.getItem("cards") || "[]")
+    } catch {
+      return []
+    }
   })
 
   const [showModal, setShowModal] = useState(false)
@@ -33,6 +41,8 @@ function Library() {
         cards={cards}
         setShowModal={setShowModal}
         deleteFolder={handleDeleteFolder}
+        setActiveMenu={() => {}}   
+        activeMenu={null}        
       />
 
       <div className="main">

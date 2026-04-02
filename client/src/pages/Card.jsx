@@ -14,7 +14,9 @@ function Card() {
   const [allCards, setAllCards] = useState([])
   const navigate = useNavigate()
 
-  const addCard = () => setCards([...cards, { term: "", definition: "" }])
+  const addCard = () => {
+    setCards([...cards, { term: "", definition: "" }])
+  }
 
   const updateCard = (i, field, value) => {
     const copy = [...cards]
@@ -27,7 +29,6 @@ function Card() {
     navigate("/dashboard")
   }
 
-  // 🗑 очистка
   const clearCards = () => {
     setCards([{ term: "", definition: "" }])
     setTitle("")
@@ -35,7 +36,14 @@ function Card() {
 
   return (
     <div className="dashboard">
-      <Sidebar folders={folders} cards={allCards} setShowModal={() => {}} />
+
+      <Sidebar
+        folders={folders}
+        cards={allCards}
+        setShowModal={() => {}}
+        deleteFolder={() => {}}
+        setActiveMenu={() => {}}
+      />
 
       <div className="main">
         <Topbar />
@@ -49,8 +57,9 @@ function Card() {
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          {/* 🔥 КНОПКИ */}
+          {/* КНОПКИ */}
           <div className="card-actions">
+
             <button onClick={() => navigate("/import")}>
               <FontAwesomeIcon icon={faPlus} /> Import
             </button>
@@ -58,6 +67,7 @@ function Card() {
             <button onClick={clearCards}>
               <FontAwesomeIcon icon={faTrash} /> Очистить
             </button>
+
           </div>
 
           {/* КАРТОЧКИ */}
@@ -86,6 +96,7 @@ function Card() {
 
         </div>
       </div>
+
     </div>
   )
 }
