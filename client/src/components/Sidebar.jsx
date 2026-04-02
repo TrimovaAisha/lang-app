@@ -74,7 +74,10 @@ function Sidebar({
 
         {cards.length > 0 ? (
           cards.map((c, index) => (
-            <p key={index}>
+            <p
+            key={index}
+            onClick={() => navigate(`/study/${c._id}`)}
+            >
               <i className="fa-solid fa-layer-group"></i>{" "}
               {typeof c === "string" ? c : c.title}
             </p>

@@ -19,6 +19,7 @@ function App() {
       <Route path="/flash/:id" element={<Flashcard />} />
       <Route path="/library" element={<Library />} />
       <Route path="/folders" element={<Folders />} />
+      <Route path="/study/:id" element={<Study />} />
     </Routes>
   )
 }

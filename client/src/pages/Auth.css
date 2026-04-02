@@ -756,3 +756,71 @@ html, body, #root {
 .import-btn:hover {
   background: #1d4ed8;
 }
+.study-page {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.study-title {
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* карточка */
+.study-card {
+  width: 500px;
+  height: 250px;
+  margin: 0 auto;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.study-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  background: #5b5b8a;
+  color: white;
+}
+
+.card-back {
+  background: #3b3b6d;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.study-controls {
+  margin-top: 20px;
+}
+
+.study-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background: #5b5b8a;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
