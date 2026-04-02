@@ -955,3 +955,148 @@ html, body, #root {
 .module-select-item:hover {
   background: #3a3a5a;
 }
+/* ===== Адаптивность ===== */
+
+/* Телефон (320px — 480px) */
+@media (max-width: 480px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+  }
+
+  .sidebar .folders,
+  .sidebar .cards,
+  .sidebar .menu {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .main {
+    padding: 10px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .folder-actions-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .module-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .library-tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .library-card {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .add-module-btn {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Планшет (481px — 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 15px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .folder-actions-top {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .module-item {
+    flex-direction: row;
+  }
+}
+
+/* Ноутбук (769px — 1200px) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .folder-page {
+    padding: 15px;
+  }
+
+  .folder-actions-top {
+    gap: 15px;
+  }
+
+  .module-item {
+    padding: 12px;
+  }
+}
+
+/* Большие экраны / телевизоры (1201px — 1920px) */
+@media (min-width: 1201px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .folder-page {
+    padding: 30px;
+  }
+
+  .module-item {
+    padding: 15px 20px;
+  }
+
+  .library-card {
+    font-size: 18px;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+}
+
+/* Сверхбольшие экраны (Ultra HD, >1920px) */
+@media (min-width: 1921px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  .folder-page {
+    padding: 40px 60px;
+  }
+
+  .module-item {
+    padding: 20px;
+  }
+
+  .library-card {
+    font-size: 20px;
+    padding: 18px 20px;
+  }
+}
