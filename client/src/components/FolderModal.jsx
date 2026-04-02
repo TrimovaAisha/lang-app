@@ -1,23 +1,48 @@
 import { useState } from "react"
-import API from "../api"
 
-function FolderModal({ showModal, setShowModal, reload }) {
+function FolderModal({ showModal, setShowModal, setFolders }) {
   const [name, setName] = useState("")
-
-  const create = async () => {
-    await API.post("/folders", { name })
-    setShowModal(false)
-    setName("")
-    reload && reload()
-  }
 
   if (!showModal) return null
 
+  const createFolder = () => {
+    if (!name.trim()) return
+
+    setFolders(prev => {
+      const updated = [...prev, name]
+      localStorage.setItem("folders", JSON.stringify(updated))
+      return updated
+    })
+
+    setName("")
+    setShowModal(false)
+  }
+
   return (
-    <div className="modal-overlay" onClick={() => setShowModal(false)}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
-        <button onClick={create}>Создать</button>
+    <div className="modal-overlay">
+      <div className="modal">
+
+        {/* ❌ крестик */}
+        <span className="close" onClick={() => setShowModal(false)}>
+          <i className="fa-solid fa-xmark"></i>
+        </span>
+
+        {/* 📁 иконка */}
+        <div className="modal-icon">
+          <i className="fa-solid fa-folder"></i>
+        </div>
+
+        <h2>Новая папка</h2>
+
+        <input
+          placeholder="Название папки"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <button onClick={createFolder}>
+          Создать
+        </button>
       </div>
     </div>
   )

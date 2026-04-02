@@ -632,3 +632,41 @@ html, body, #root {
 .create-btn:hover {
   background: #7a6cff;
 }
+.folder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.dots {
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.dropdown p {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.modal-icon {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 10px;
+}

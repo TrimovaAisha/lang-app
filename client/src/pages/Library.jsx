@@ -3,26 +3,26 @@ import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 function Library() {
   const [folders, setFolders] = useState(() => {
-    return JSON.parse(localStorage.getItem("folders")) || ["папка"]
+    return JSON.parse(localStorage.getItem("folders")) || []
   })
-  const [activeMenu, setActiveMenu] = useState(null)
+
+  const [cards, setCards] = useState(() => {
+    return JSON.parse(localStorage.getItem("cards")) || []
+  })
+
   const [showModal, setShowModal] = useState(false)
+  const [activeTab, setActiveTab] = useState("cards")
 
-  const [cards, setCards] = useState([
-    "название карточки",
-    "название карточки",
-    "название карточки",
-    "название карточки"
-  ])
-
-  const deleteFolder = (index) => {
-    const updated = folders.filter((_, i) => i !== index)
-    setFolders(updated)
+  // ✅ удаление папки
+  const handleDeleteFolder = (index) => {
+    setFolders(prev => {
+      const updated = prev.filter((_, i) => i !== index)
+      localStorage.setItem("folders", JSON.stringify(updated))
+      return updated
+    })
   }
 
   return (
@@ -30,13 +30,9 @@ function Library() {
 
       <Sidebar
         folders={folders}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
+        cards={cards}
         setShowModal={setShowModal}
-        deleteFolder={(index) => {
-          const updated = folders.filter((_, i) => i !== index)
-          setFolders(updated)
-        }}
+        deleteFolder={handleDeleteFolder}
       />
 
       <div className="main">
@@ -46,23 +42,56 @@ function Library() {
           <h1>Ваша библиотека</h1>
 
           <div className="library-tabs">
-            <span>Модуль</span>
-            <span>Папки</span>
+            <span
+              className={activeTab === "cards" ? "active" : ""}
+              onClick={() => setActiveTab("cards")}
+            >
+              Модуль
+            </span>
+
+            <span
+              className={activeTab === "folders" ? "active" : ""}
+              onClick={() => setActiveTab("folders")}
+            >
+              Папки
+            </span>
           </div>
 
-          {cards.map((card, index) => (
-            <div key={index} className="library-card">
-              {card}
-            </div>
-          ))}
+          {/* КАРТОЧКИ */}
+          {activeTab === "cards" && (
+            cards.length === 0 ? (
+              <p>Нет карточек</p>
+            ) : (
+              cards.map((card, index) => (
+                <div key={index} className="library-card">
+                  {card.title || card}
+                </div>
+              ))
+            )
+          )}
+
+          {/* ПАПКИ */}
+          {activeTab === "folders" && (
+            folders.length === 0 ? (
+              <p>Нет папок</p>
+            ) : (
+              folders.map((folder, index) => (
+                <div key={index} className="library-card">
+                  {folder.name || folder}
+                </div>
+              ))
+            )
+          )}
         </div>
       </div>
 
-      {/* MODAL */}
       <FolderModal
         showModal={showModal}
         setShowModal={setShowModal}
-        setFolders={setFolders}
+        setFolders={(newFolders) => {
+          setFolders(newFolders)
+          localStorage.setItem("folders", JSON.stringify(newFolders))
+        }}
       />
 
     </div>
