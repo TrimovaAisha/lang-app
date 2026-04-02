@@ -955,19 +955,21 @@ html, body, #root {
 .module-select-item:hover {
   background: #3a3a5a;
 }
-/* ===== Адаптивность ===== */
+/* ===== Адаптивность улучшенная ===== */
 
-/* Телефон (320px — 480px) */
+/* Общие настройки для мобильных (max-width: 480px) */
 @media (max-width: 480px) {
   .dashboard {
     flex-direction: column;
   }
 
+  /* Сайдбар горизонтально сверху */
   .sidebar {
     width: 100%;
     flex-direction: row;
     overflow-x: auto;
-    padding: 10px;
+    padding: 10px 5px;
+    gap: 10px;
   }
 
   .sidebar .folders,
@@ -977,37 +979,69 @@ html, body, #root {
     gap: 8px;
   }
 
+  /* Main контент */
   .main {
     padding: 10px;
   }
 
+  /* Сетка карточек */
   .card-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .folder-actions-top {
+  /* Заголовки и кнопки сверху */
+  .folder-header,
+  .library-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  /* Блок с кнопками + */
+  .folder-actions-top,
+  .cards-actions {
     flex-direction: column;
     gap: 10px;
+    align-items: center;
   }
 
+  .add-module-btn,
+  .add-folder,
+  .add-card-container button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  /* Модули вертикально */
   .module-item {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .library-tabs {
-    flex-direction: column;
-    gap: 10px;
+  .module-item i {
+    margin-top: 5px;
   }
 
+  /* Library карточки */
   .library-card {
     font-size: 14px;
     padding: 10px;
   }
 
-  .add-module-btn {
-    width: 35px;
-    height: 35px;
+  /* HighLang выравнивание */
+  .topbar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .topbar input {
+    width: 90%;
+  }
+
+  .logout {
+    width: 90%;
   }
 }
 
@@ -1021,20 +1055,32 @@ html, body, #root {
     width: 100%;
     flex-direction: row;
     overflow-x: auto;
-    padding: 15px;
+    padding: 15px 10px;
+    gap: 12px;
   }
 
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .folder-actions-top {
+  .folder-actions-top,
+  .cards-actions {
     flex-direction: row;
     gap: 15px;
   }
 
   .module-item {
     flex-direction: row;
+  }
+
+  .topbar {
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .topbar input {
+    width: 60%;
   }
 }
 
@@ -1045,15 +1091,11 @@ html, body, #root {
   }
 
   .folder-page {
-    padding: 15px;
+    padding: 15px 20px;
   }
 
   .folder-actions-top {
     gap: 15px;
-  }
-
-  .module-item {
-    padding: 12px;
   }
 }
 
@@ -1064,7 +1106,7 @@ html, body, #root {
   }
 
   .folder-page {
-    padding: 30px;
+    padding: 30px 40px;
   }
 
   .module-item {
@@ -1074,13 +1116,9 @@ html, body, #root {
   .library-card {
     font-size: 18px;
   }
-
-  .sidebar {
-    width: 220px;
-  }
 }
 
-/* Сверхбольшие экраны (Ultra HD, >1920px) */
+/* Ultra HD (>1920px) */
 @media (min-width: 1921px) {
   .card-grid {
     grid-template-columns: repeat(4, 1fr);
