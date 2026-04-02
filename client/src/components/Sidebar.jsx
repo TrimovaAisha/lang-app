@@ -73,7 +73,7 @@ function Sidebar({
         {cards.length > 0 ? (
           cards.map((c, index) => (
             <p key={index}>
-              <i className="fa-solid fa-layer-group"></i> {c.title || c}
+              <i className="fa-solid fa-layer-group"></i> {typeof c === "string" ? c : c.title}
             </p>
           ))
         ) : (
