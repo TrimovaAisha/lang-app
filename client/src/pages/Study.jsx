@@ -33,15 +33,20 @@ function Study() {
 
   const next = () => {
     if (cards.length === 0) return
-    setIndex(prev => (prev + 1) % cards.length)
     setFlipped(false)
-  }
-
+    setTimeout(() => {
+        setIndex(prev => (prev + 1) % cards.length)
+    }, 150)
+}
   const prev = () => {
     if (cards.length === 0) return
-    setIndex(prev => (prev === 0 ? cards.length - 1 : prev - 1))
     setFlipped(false)
-  }
+    setTimeout(() => {
+        setIndex(prev =>
+            prev === 0 ? cards.length - 1 : prev - 1
+        )
+    }, 150)
+}
 
   if (cards.length === 0) {
     return (
