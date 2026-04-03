@@ -1,62 +1,46 @@
-import { useState } from "react"
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import API from "../api"
+import Sidebar from "../components/Sidebar"
+import Topbar from "../components/Topbar"
 
-function FolderModal({
-  showModal,
-  setShowModal = () => {},
-  setFolders = () => {},
-  reload = () => {}
-}) {
-  const [name, setName] = useState("")
+function FolderPage() {
+  const { id } = useParams()
+  const [folder, setFolder] = useState(null)
 
-  if (!showModal) return null
+  useEffect(() => {
+    load()
+  }, [])
 
-  const createFolder = async () => {
-    if (!name.trim()) return
-
+  const load = async () => {
     try {
-      // 🔥 создаём через API
-      const res = await API.post("/folders", { name })
-
-      // обновляем список
-      setFolders(prev => [...prev, res.data])
-
-      setName("")
-      setShowModal(false)
-
-      // 🔥 обновляем всё в приложении
-      reload()
+      const res = await API.get("/folders")
+      const found = res.data.find(f => f._id === id)
+      setFolder(found)
     } catch (e) {
       console.error(e)
     }
   }
 
+  if (!folder) return <div>Загрузка...</div>
+
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className="dashboard">
 
-        <span className="close" onClick={() => setShowModal(false)}>
-          <i className="fa-solid fa-xmark"></i>
-        </span>
+      <Sidebar folders={[]} cards={[]} />
 
-        <div className="modal-icon">
-          <i className="fa-solid fa-folder"></i>
+      <div className="main">
+        <Topbar />
+
+        <div className="folder-page">
+          <h1>{folder.name}</h1>
+
+          <p>Карточки внутри папки</p>
         </div>
-
-        <h2>Новая папка</h2>
-
-        <input
-          placeholder="Название папки"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <button onClick={createFolder}>
-          Создать
-        </button>
       </div>
+
     </div>
   )
 }
 
-export default FolderModal
+export default FolderPage
