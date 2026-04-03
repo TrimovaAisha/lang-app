@@ -163,11 +163,11 @@ function Library() {
       </div>
 
       <FolderModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setFolders={setFolders}
+      showModal={showModal}
+      setShowModal={setShowModal}
+      setFolders={setFolders}
+      reload={loadData}   
       />
-
     </div>
   )
 }

@@ -4,11 +4,11 @@ import { useState } from "react"
 function Sidebar({
   folders = [],
   cards = [],
-  setShowModal = () => {},   // ✅ дефолт
-  deleteFolder = () => {}    // ✅ дефолт (фикс ошибки)
+  setShowModal = () => {},
+  deleteFolder = () => {}
 }) {
   const navigate = useNavigate()
-  const [openMenuIndex, setOpenMenuIndex] = useState(null)
+  const [openMenuId, setOpenMenuId] = useState(null)
 
   return (
     <div className="sidebar">
@@ -29,28 +29,29 @@ function Sidebar({
         <p className="title">Ваши папки</p>
 
         {folders.length > 0 ? (
-          folders.map((f, index) => (
-            <div key={index} className="folder-item">
+          folders.map((f) => (
+            <div key={f._id} className="folder-item">
 
-              <p onClick={() => navigate("/folders")}>
-                <i className="fa-solid fa-folder"></i> {f.name || f}
+              {/* 🔥 ПЕРЕХОД С ID */}
+              <p onClick={() => navigate(`/folders/${f._id}`)}>
+                <i className="fa-solid fa-folder"></i> {f.name || "Без названия"}
               </p>
 
               <span
                 className="dots"
                 onClick={() =>
-                  setOpenMenuIndex(openMenuIndex === index ? null : index)
+                  setOpenMenuId(openMenuId === f._id ? null : f._id)
                 }
               >
                 ⋮
               </span>
 
-              {openMenuIndex === index && (
+              {openMenuId === f._id && (
                 <div className="dropdown">
                   <p
                     onClick={() => {
-                      deleteFolder(index) // ✅ теперь всегда функция
-                      setOpenMenuIndex(null)
+                      deleteFolder(f._id) // ✅ FIX
+                      setOpenMenuId(null)
                     }}
                   >
                     Удалить
@@ -73,13 +74,9 @@ function Sidebar({
         <p className="title">Карточки</p>
 
         {cards.length > 0 ? (
-          cards.map((c, index) => (
-            <p
-            key={index}
-            onClick={() => navigate(`/study/${c._id}`)}
-            >
-              <i className="fa-solid fa-layer-group"></i>{" "}
-              {typeof c === "string" ? c : c.title}
+          cards.map((c) => (
+            <p key={c._id} onClick={() => navigate(`/study/${c._id}`)}>
+              <i className="fa-solid fa-layer-group"></i> {c.title}
             </p>
           ))
         ) : (

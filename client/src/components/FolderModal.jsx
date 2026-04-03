@@ -1,25 +1,34 @@
 import { useState } from "react"
+import API from "../api"
 
 function FolderModal({
   showModal,
-  setShowModal = () => {},   // ✅ защита
-  setFolders = () => {}      // ✅ защита (ВАЖНО)
+  setShowModal = () => {},
+  setFolders = () => {},
+  reload = () => {}
 }) {
   const [name, setName] = useState("")
 
   if (!showModal) return null
 
-  const createFolder = () => {
+  const createFolder = async () => {
     if (!name.trim()) return
 
-    setFolders(prev => {
-      const updated = [...(prev || []), name]   // ✅ защита
-      localStorage.setItem("folders", JSON.stringify(updated))
-      return updated
-    })
+    try {
+      // 🔥 создаём через API
+      const res = await API.post("/folders", { name })
 
-    setName("")
-    setShowModal(false)
+      // обновляем список
+      setFolders(prev => [...prev, res.data])
+
+      setName("")
+      setShowModal(false)
+
+      // 🔥 обновляем всё в приложении
+      reload()
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
