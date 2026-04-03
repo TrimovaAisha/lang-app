@@ -12,7 +12,6 @@ function Library() {
   const [activeTab, setActiveTab] = useState("cards")
   const [menuOpenId, setMenuOpenId] = useState(null)
 
-  // --- загрузка данных с сервера ---
   useEffect(() => {
     loadData()
   }, [])
@@ -28,7 +27,6 @@ function Library() {
     }
   }
 
-  // --- удаление карточки ---
   const deleteCard = async (id) => {
     try {
       await API.delete(`/cards/${id}`)
@@ -38,7 +36,6 @@ function Library() {
     }
   }
 
-  // --- удаление папки ---
   const deleteFolder = async (id) => {
     try {
       await API.delete(`/folders/${id}`)
@@ -104,14 +101,22 @@ function Library() {
                   {menuOpenId === card._id && (
                     <div className="card-menu">
                       <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          deleteCard(card._id)
-                          setMenuOpenId(null)
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        window.location.href = `/edit/${card._id}`
                         }}
-                      >
-                        Удалить
-                      </button>
+                        >
+                          Редактировать
+                        </button>
+                      <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        deleteCard(card._id)
+                        setMenuOpenId(null)
+                        }}
+                        >
+                          Удалить
+                        </button>
                     </div>
                   )}
                 </div>

@@ -1,101 +1,88 @@
 import "./Auth.css"
 import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
-import FolderModal from "../components/FolderModal"
 import API from "../api"
 
-function Folders({ folderId }) {
-  const [folders, setFolders] = useState([])
-  const [modules, setModules] = useState([]) // модули в выбранной папке
-  const [allModules, setAllModules] = useState([]) // все доступные модули для добавления
-  const [activeMenu, setActiveMenu] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [selectedFolder, setSelectedFolder] = useState(null)
+function Folders() {
+  const { id } = useParams() // 🔥 ВАЖНО: берем id из URL
 
+  const [folders, setFolders] = useState([])
+  const [modules, setModules] = useState([])
+  const [allModules, setAllModules] = useState([])
+  const [showAddModal, setShowAddModal] = useState(false)
+
+  // загрузка
   useEffect(() => {
-    loadFolders()
-    loadAllModules()
+    loadData()
   }, [])
 
-  useEffect(() => {
-    if (folders.length > 0 && folderId) {
-      const folder = folders.find(f => f._id === folderId)
-      setSelectedFolder(folder)
-      setModules(folder?.modules || [])
-    }
-  }, [folders, folderId])
-
-  // Загрузка папок с сервера
-  const loadFolders = async () => {
+  const loadData = async () => {
     try {
-      const res = await API.get("/folders")
-      setFolders(res.data)
+      const f = await API.get("/folders")
+      const c = await API.get("/cards")
+
+      setFolders(f.data)
+      setAllModules(c.data)
+
+      const current = f.data.find(f => f._id === id)
+      if (current) {
+        setModules(current.modules || [])
+      }
     } catch (e) {
       console.error(e)
     }
   }
 
-  // Загрузка всех модулей с сервера
-  const loadAllModules = async () => {
+  // добавление модуля
+  const addModule = async (mod) => {
+    if (modules.find(m => m._id === mod._id)) return
+
+    const updated = [...modules, mod]
+    setModules(updated)
+
     try {
-      const res = await API.get("/cards") // допустим, модули это карточки
-      setAllModules(res.data)
+      await API.put(`/folders/${id}`, { modules: updated })
     } catch (e) {
       console.error(e)
     }
+
+    setShowAddModal(false)
   }
 
-  // Добавление модуля в папку
-  const addModuleToFolder = (mod) => {
-    if (!modules.find(m => m._id === mod._id)) {
-      const updated = [...modules, mod]
-      setModules(updated)
-
-      // Сохраняем на сервер
-      API.put(`/folders/${folderId}`, { modules: updated })
-        .then(() => loadFolders())
-        .catch(console.error)
-    }
-    setShowModal(false)
-  }
-
-  // Удаление конкретного модуля
-  const deleteModule = (modId) => {
+  // удаление
+  const deleteModule = async (modId) => {
     const updated = modules.filter(m => m._id !== modId)
     setModules(updated)
 
-    API.put(`/folders/${folderId}`, { modules: updated })
-      .then(() => loadFolders())
-      .catch(console.error)
+    try {
+      await API.put(`/folders/${id}`, { modules: updated })
+    } catch (e) {
+      console.error(e)
+    }
   }
+
+  const currentFolder = folders.find(f => f._id === id)
 
   return (
     <div className="dashboard">
-      <Sidebar
-        folders={folders}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setShowModal={setShowModal}
-        deleteFolder={async (id) => {
-          await API.delete(`/folders/${id}`)
-          setFolders(prev => prev.filter(f => f._id !== id))
-        }}
-        cards={[]}
-      />
+      <Sidebar folders={folders} cards={[]} setShowModal={() => {}} />
 
       <div className="main">
         <Topbar />
 
         <div className="folder-page">
           <h2 className="folder-header">
-            {selectedFolder?.name || "Папка не найдена"}
+            {currentFolder ? currentFolder.name : "Загрузка..."}
           </h2>
 
+          {/* ➕ КНОПКА */}
           <div className="folder-actions-top">
-            <button onClick={() => setShowModal(true)}>+</button>
+            <button onClick={() => setShowAddModal(true)}>+</button>
           </div>
 
+          {/* МОДУЛИ */}
           {modules.map(mod => (
             <div key={mod._id} className="module-item">
               <span>{mod.title}</span>
@@ -108,23 +95,32 @@ function Folders({ folderId }) {
         </div>
       </div>
 
-      <FolderModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-      >
-        <h3>Выберите модуль</h3>
-        <div className="modules-list">
-          {allModules.map(mod => (
-            <div
-              key={mod._id}
-              className="module-select-item"
-              onClick={() => addModuleToFolder(mod)}
-            >
-              {mod.title}
+      {/* 🔥 НОВАЯ МОДАЛКА (НЕ FolderModal!) */}
+      {showAddModal && (
+        <div className="modal">
+          <div className="modal-content">
+
+            <h3>Добавить модуль</h3>
+
+            <div className="modules-list">
+              {allModules.map(mod => (
+                <div
+                  key={mod._id}
+                  className="module-select-item"
+                  onClick={() => addModule(mod)}
+                >
+                  {mod.title}
+                </div>
+              ))}
             </div>
-          ))}
+
+            <button onClick={() => setShowAddModal(false)}>
+              Закрыть
+            </button>
+
+          </div>
         </div>
-      </FolderModal>
+      )}
     </div>
   )
 }

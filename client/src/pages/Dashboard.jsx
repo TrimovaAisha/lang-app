@@ -67,17 +67,24 @@ function Dashboard() {
               {menuOpenId === c._id && (
                 <div className="card-menu">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      deleteCard(c._id)
-                      setMenuOpenId(null)
-                    }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    window.location.href = `/edit/${c._id}`
+                  }}
+                  >
+                    Редактировать
+                  </button>
+                  <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deleteCard(c._id)
+                    setMenuOpenId(null)
+                  }}
                   >
                     Удалить
                   </button>
                 </div>
               )}
-
             </div>
           ))}
         </div>

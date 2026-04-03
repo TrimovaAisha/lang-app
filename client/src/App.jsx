@@ -8,6 +8,7 @@ import Flashcard from "./pages/Flashcard"
 import Library from "./pages/Library"
 import Folders from "./pages/Folders"
 import Study from "./pages/Study"
+import EditCard from "./pages/EditCard"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/library" element={<Library />} />
       <Route path="/folders" element={<Folders />} />
       <Route path="/study/:id" element={<Study />} />
+      <Route path="/edit/:id" element={<EditCard />} />
     </Routes>
   )
 }
