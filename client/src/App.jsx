@@ -9,6 +9,7 @@ import Library from "./pages/Library"
 import Folders from "./pages/Folders"
 import Study from "./pages/Study"
 import EditCard from "./pages/EditCard"
+import FolderPage from "./pages/FolderPage"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/folders" element={<Folders />} />
       <Route path="/study/:id" element={<Study />} />
       <Route path="/edit/:id" element={<EditCard />} />
+      <Route path="/folders/:id" element={<FolderPage />} />
     </Routes>
   )
 }
