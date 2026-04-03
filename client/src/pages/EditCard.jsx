@@ -42,12 +42,19 @@ function EditCard() {
     setCards([...cards, { term: "", definition: "" }])
   }
 
+  // 🔥 ВОТ ТУТ ФИКС
   const save = async () => {
     try {
-      await API.put(`/cards/${id}`, { title, cards })
+      // удаляем старый набор
+      await API.delete(`/cards/${id}`)
+
+      // создаём новый
+      await API.post("/cards", { title, cards })
+
       navigate("/dashboard")
     } catch (e) {
       console.error(e)
+      alert("Ошибка при сохранении")
     }
   }
 
@@ -73,17 +80,20 @@ function EditCard() {
               <input
                 value={c.term}
                 onChange={(e) => updateCard(i, "term", e.target.value)}
+                placeholder="Термин"
               />
 
               <input
                 value={c.definition}
                 onChange={(e) => updateCard(i, "definition", e.target.value)}
+                placeholder="Определение"
               />
             </div>
           ))}
 
           <div className="cards-bottom">
             <button onClick={addCard}>Добавить</button>
+
             <button className="create-btn" onClick={save}>
               Сохранить
             </button>
