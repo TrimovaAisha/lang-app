@@ -47,12 +47,10 @@ function Dashboard() {
           {filtered.map(c => (
             <div key={c._id} className="card">
 
-              {/* Клик по карточке */}
               <div onClick={() => navigate(`/study/${c._id}`)}>
                 {c.title}
               </div>
 
-              {/* Троеточие */}
               <div
                 className="card-menu-btn"
                 onClick={(e) => {
@@ -63,23 +61,23 @@ function Dashboard() {
                 ⋮
               </div>
 
-              {/* Меню */}
               {menuOpenId === c._id && (
                 <div className="card-menu">
                   <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    window.location.href = `/edit/${c._id}`
-                  }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      navigate(`/edit/${c._id}`) // ✅ FIX
+                    }}
                   >
                     Редактировать
                   </button>
+
                   <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    deleteCard(c._id)
-                    setMenuOpenId(null)
-                  }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      deleteCard(c._id)
+                      setMenuOpenId(null)
+                    }}
                   >
                     Удалить
                   </button>

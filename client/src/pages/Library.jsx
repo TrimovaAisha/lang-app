@@ -1,5 +1,6 @@
 import "./Auth.css"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom" // ✅ ДОБАВИЛ
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import FolderModal from "../components/FolderModal"
@@ -11,6 +12,7 @@ function Library() {
   const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState("cards")
   const [menuOpenId, setMenuOpenId] = useState(null)
+  const navigate = useNavigate() // ✅ ДОБАВИЛ
 
   useEffect(() => {
     loadData()
@@ -53,8 +55,6 @@ function Library() {
         cards={cards}
         setShowModal={setShowModal}
         deleteFolder={deleteFolder}
-        setActiveMenu={() => {}}
-        activeMenu={null}
       />
 
       <div className="main">
@@ -78,7 +78,6 @@ function Library() {
             </span>
           </div>
 
-          {/* КАРТОЧКИ */}
           {activeTab === "cards" && (
             cards.length === 0 ? (
               <p>Нет карточек</p>
@@ -87,7 +86,6 @@ function Library() {
                 <div key={card._id} className="library-card">
                   <div>{card.title}</div>
 
-                  {/* ⋮ меню */}
                   <div
                     className="card-menu-btn"
                     onClick={(e) => {
@@ -101,22 +99,23 @@ function Library() {
                   {menuOpenId === card._id && (
                     <div className="card-menu">
                       <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        window.location.href = `/edit/${card._id}`
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigate(`/edit/${card._id}`) // ✅ FIX
                         }}
-                        >
-                          Редактировать
-                        </button>
+                      >
+                        Редактировать
+                      </button>
+
                       <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        deleteCard(card._id)
-                        setMenuOpenId(null)
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          deleteCard(card._id)
+                          setMenuOpenId(null)
                         }}
-                        >
-                          Удалить
-                        </button>
+                      >
+                        Удалить
+                      </button>
                     </div>
                   )}
                 </div>
@@ -124,7 +123,6 @@ function Library() {
             )
           )}
 
-          {/* ПАПКИ */}
           {activeTab === "folders" && (
             folders.length === 0 ? (
               <p>Нет папок</p>
@@ -133,7 +131,6 @@ function Library() {
                 <div key={folder._id} className="library-card">
                   <div>{folder.name}</div>
 
-                  {/* ⋮ меню */}
                   <div
                     className="card-menu-btn"
                     onClick={(e) => {
