@@ -9,7 +9,7 @@ function FolderPage() {
 
   const [folder, setFolder] = useState(null)
   const [cards, setCards] = useState([])
-  const [title, setTitle] = useState("")
+  const [allCards, setAllCards] = useState([])
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
@@ -29,28 +29,28 @@ function FolderPage() {
 
       setFolder(foundFolder)
       setCards(filteredCards)
+      setAllCards(cardsRes.data)
 
     } catch (e) {
       console.error(e)
     }
   }
 
-  const createCard = async () => {
-    if (!title.trim()) return
+  const addExistingCard = async (card) => {
+    if (cards.find(c => c._id === card._id)) return
+
+    const updated = [...cards, { ...card, folderId: id }]
+    setCards(updated)
 
     try {
-      const res = await API.post("/cards", {
-        title,
+      await API.put(`/cards/${card._id}`, {
         folderId: id
       })
-
-      setCards(prev => [...prev, res.data])
-      setTitle("")
-      setShowModal(false)
-
     } catch (e) {
       console.error(e)
     }
+
+    setShowModal(false)
   }
 
   if (!folder) return <div>Загрузка...</div>
@@ -66,12 +66,7 @@ function FolderPage() {
         <div className="folder-page">
           <h1>{folder.name}</h1>
 
-          <button
-            onClick={() => setShowModal(true)}
-            style={{ fontSize: "24px", padding: "10px 15px" }}
-          >
-            +
-          </button>
+          <button onClick={() => setShowModal(true)}>+</button>
 
           {cards.length === 0 ? (
             <p>В этой папке пока нет карточек</p>
@@ -92,15 +87,20 @@ function FolderPage() {
               ✕
             </span>
 
-            <h2>Новая карточка</h2>
+            <h3>Добавить карточку</h3>
 
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Название карточки"
-            />
+            <div className="cards-list">
+              {allCards.map(card => (
+                <div
+                  key={card._id}
+                  className="card-item"
+                  onClick={() => addExistingCard(card)}
+                >
+                  {card.title}
+                </div>
+              ))}
+            </div>
 
-            <button onClick={createCard}>Создать</button>
           </div>
         </div>
       )}
